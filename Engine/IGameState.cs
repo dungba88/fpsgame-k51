@@ -8,14 +8,14 @@ namespace FPSGame.Engine
 {
     interface IGameState : IObject
     {
-        public void SetNextState(IGameState state);
+        void SetNextState(IGameState state);
 
-        public void SetPrevState(IGameState state);
+        void SetPrevState(IGameState state);
 
-        public void GoNext();
+        void GoNext();
 
-        public void GoBack();
+        void GoBack();
 
-        public bool IsStarted();
+        bool IsStarted();
     }
 }

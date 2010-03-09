@@ -19,14 +19,22 @@ namespace FPSGame.Engine
     /// </summary>
     public class Camera : Microsoft.Xna.Framework.GameComponent, ICamera
     {
-        private Matrix view;
-        private Matrix projection;
+        protected Matrix view;
+        protected Matrix projection;
+        protected Vector3 pos;
+        protected Vector3 dir;
+        protected Vector3 up;
 
         public Camera(Game game, Vector3 pos, Vector3 target, Vector3 up)
             : base(game)
         {
             // TODO: Construct any child components here
-            view = Matrix.CreateLookAt(pos, target, up);
+            this.pos = pos;
+            this.dir = target-pos;
+            this.pos.Normalize();
+            this.up = up;
+            Update();
+
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                     (float)Game.Window.ClientBounds.Width /
                     (float)Game.Window.ClientBounds.Height,
@@ -40,7 +48,7 @@ namespace FPSGame.Engine
         public override void Initialize()
         {
             // TODO: Add your initialization code here
-
+            Begin();
             base.Initialize();
         }
 
@@ -51,7 +59,7 @@ namespace FPSGame.Engine
         public override void Update(GameTime gameTime)
         {
             // TODO: Add your update code here
-
+            Update();
             base.Update(gameTime);
         }
 
@@ -73,6 +81,24 @@ namespace FPSGame.Engine
         public void SetProjection(Matrix projection)
         {
             this.projection = projection;
+        }
+
+        public void Begin()
+        {
+        }
+
+        public void Update()
+        {
+            view = Matrix.CreateLookAt(pos, pos+dir, up);
+        }
+
+        public void End()
+        {
+        }
+
+        public bool IsDead()
+        {
+            return false;
         }
     }
 }

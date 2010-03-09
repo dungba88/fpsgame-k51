@@ -1,0 +1,9 @@
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\FPSGame.exe
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\FPSGame.pdb
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Xclna.Xna.Animationx86.dll
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Xclna.Xna.Animationx86.xml
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\obj\x86\Debug\FPSGame.exe
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\obj\x86\Debug\FPSGame.pdb
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\FPSGame.exe.config

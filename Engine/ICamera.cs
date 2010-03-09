@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using FPSGame.Core;
 
 namespace FPSGame.Engine
 {
-    interface ICamera
+    interface ICamera : IObject
     {
-        public Matrix GetView();
+        Matrix GetView();
 
-        public void SetView(Matrix m);
+        void SetView(Matrix m);
 
-        public Matrix GetProjection();
+        Matrix GetProjection();
 
-        public void SetProjection(Matrix m);
+        void SetProjection(Matrix m);
     }
 }

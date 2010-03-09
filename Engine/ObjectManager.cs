@@ -23,6 +23,14 @@ namespace FPSGame.Engine
             return instance;
         }
 
+        public void Update()
+        {
+            foreach (IDisplayObject obj in objects)
+            {
+                obj.Update();
+            }
+        }
+
         public bool IsObjectRegistered(IDisplayObject obj)
         {
             if (objects.Contains(obj))

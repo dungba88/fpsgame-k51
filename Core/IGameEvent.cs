@@ -7,8 +7,8 @@ namespace FPSGame.Core
 {
     interface IGameEvent
     {
-        public IObject GetSource();
+        IObject GetSource();
 
-        public String GetEventData();
+        String GetEventData();
     }
 }
