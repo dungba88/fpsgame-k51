@@ -7,6 +7,6 @@ namespace FPSGame.Core
 {
     interface ISubject
     {
-        public void NotifyAllObservers(IGameEvent evt);
+        void NotifyAllObservers(IGameEvent evt);
     }
 }

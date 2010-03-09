@@ -8,18 +8,18 @@ namespace FPSGame.Core
 {
     interface IKeyboardControls
     {
-        public Keys MoveForwardKey();
+        Keys MoveForwardKey();
 
-        public Keys MoveLeftKey();
+        Keys MoveLeftKey();
 
-        public Keys MoveRightKey();
+        Keys MoveRightKey();
 
-        public Keys MoveBackwardKey();
+        Keys MoveBackwardKey();
 
-        public Keys CrouchKey();
+        Keys CrouchKey();
 
-        public Keys LayDownKey();
+        Keys LayDownKey();
 
-        public Keys ReloadWeaponKey();
+        Keys ReloadWeaponKey();
     }
 }

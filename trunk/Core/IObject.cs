@@ -7,12 +7,12 @@ namespace FPSGame.Core
 {
     interface IObject
     {
-        public void Begin();
+        void Begin();
 
-        public void Update();
+        void Update();
 
-        public void End();
+        void End();
 
-        public void IsDead();
+        bool IsDead();
     }
 }

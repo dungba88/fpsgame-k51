@@ -8,22 +8,22 @@ namespace FPSGame.Core
 {
     interface IPlayer
     {
-        public String GetName();
+        String GetName();
 
-        public void SetName(String name);
+        void SetName(String name);
 
-        public long GetScore();
+        long GetScore();
 
-        public void SetScore(long score);
+        void SetScore(long score);
 
-        public void AddScore(long score);
+        void AddScore(long score);
 
-        public IKeyboardControls GetKbdControls();
+        IKeyboardControls GetKbdControls();
 
-        public void SetKbdControls(IKeyboardControls kbpControls);
+        void SetKbdControls(IKeyboardControls kbpControls);
 
-        public IPlayerCharacter GetCharacter();
+        IPlayerCharacter GetCharacter();
 
-        public void SetCharacter(IPlayerCharacter character);
+        void SetCharacter(IPlayerCharacter character);
     }
 }
