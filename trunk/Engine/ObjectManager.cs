@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using FPSGame.Core;
 using Microsoft.Xna.Framework;
+using FPSGame.Engine.GameEvent;
 
 namespace FPSGame.Engine
 {
@@ -19,6 +20,8 @@ namespace FPSGame.Engine
         private ObjectManager()
         {
             objects = new ArrayList();
+            addingObjects = new ArrayList();
+            removingObjects = new ArrayList();
         }
 
         public static ObjectManager GetInstance()

@@ -88,10 +88,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Debugger.cs" />
     <Compile Include="Core\DefaultKeyboardControls.cs" />
     <Compile Include="Core\Drawable.cs" />
     <Compile Include="Core\IDisplayObject.cs" />
-    <Compile Include="Core\IGameEvent.cs" />
+    <Compile Include="Engine\GameEvent\GameEvent.cs" />
+    <Compile Include="Engine\GameEvent\IGameEvent.cs" />
     <Compile Include="Core\IKeyboardControls.cs" />
     <Compile Include="Core\IObject.cs" />
     <Compile Include="Core\IObserver.cs" />
@@ -100,8 +102,9 @@
     <Compile Include="Core\MathUtils.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\FirstPersonCamera.cs" />
+    <Compile Include="Engine\GameState\SimpleGameState.cs" />
     <Compile Include="Engine\ICamera.cs" />
-    <Compile Include="Engine\IGameState.cs" />
+    <Compile Include="Engine\GameState\IGameState.cs" />
     <Compile Include="Engine\ObjectManager.cs" />
     <Compile Include="Engine\ResourceManager.cs" />
     <Compile Include="Object\ICharacter.cs" />

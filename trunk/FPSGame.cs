@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using FPSGame.Engine;
+using FPSGame.Engine.GameState;
 
 namespace FPSGame
 {
@@ -112,6 +113,14 @@ namespace FPSGame
             }
 
             base.Draw(gameTime);
+        }
+
+        public void SetGameState(IGameState state)
+        {
+            if (!currentState.IsDead())
+                currentState.End();
+            currentState = state;
+            currentState.StartOver();
         }
     }
 }

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using FPSGame.Core;
 
-namespace FPSGame.Engine
+namespace FPSGame.Engine.GameState
 {
-    interface IGameState : IObject, Drawable
+    public interface IGameState : IObject, Drawable
     {
+        String GetName();
+
         void SetNextState(IGameState state);
 
         void SetPrevState(IGameState state);
@@ -17,5 +19,7 @@ namespace FPSGame.Engine
         void GoBack();
 
         bool IsStarted();
+
+        void StartOver();
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace FPSGame.Core
 {
-    interface Drawable
+    public interface Drawable
     {
         void Draw(GameTime gameTime);
     }
