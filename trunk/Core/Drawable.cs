@@ -6,14 +6,8 @@ using Microsoft.Xna.Framework;
 
 namespace FPSGame.Core
 {
-    public interface IObject
+    interface Drawable
     {
-        void Begin();
-
-        void Update(GameTime gameTime);
-
-        void End();
-
-        bool IsDead();
+        void Draw(GameTime gameTime);
     }
 }

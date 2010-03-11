@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DefaultKeyboardControls.cs" />
+    <Compile Include="Core\Drawable.cs" />
     <Compile Include="Core\IDisplayObject.cs" />
     <Compile Include="Core\IGameEvent.cs" />
     <Compile Include="Core\IKeyboardControls.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Core\IObserver.cs" />
     <Compile Include="Core\IPlayer.cs" />
     <Compile Include="Core\ISubject.cs" />
+    <Compile Include="Core\MathUtils.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\FirstPersonCamera.cs" />
     <Compile Include="Engine\ICamera.cs" />
@@ -104,9 +106,10 @@
     <Compile Include="Engine\ResourceManager.cs" />
     <Compile Include="Object\ICharacter.cs" />
     <Compile Include="Object\IPlayerCharacter.cs" />
+    <Compile Include="Object\SimpleObject3D.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Game1.cs" />
+    <Compile Include="FPSGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
