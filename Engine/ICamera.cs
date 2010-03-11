@@ -7,7 +7,7 @@ using FPSGame.Core;
 
 namespace FPSGame.Engine
 {
-    interface ICamera : IObject
+    public interface ICamera : IObject
     {
         Matrix GetView();
 

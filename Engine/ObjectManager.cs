@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FPSGame.Core;
+using Microsoft.Xna.Framework;
 
 namespace FPSGame.Engine
 {
     class ObjectManager : ISubject
     {
         private ArrayList objects;
+        private ArrayList addingObjects;
+        private ArrayList removingObjects;
 
         private static ObjectManager instance = new ObjectManager();
 
@@ -18,16 +21,42 @@ namespace FPSGame.Engine
             objects = new ArrayList();
         }
 
-        public static ObjectManager getInstance()
+        public static ObjectManager GetInstance()
         {
             return instance;
         }
 
-        public void Update()
+        public void CleanUp()
+        {
+            //remove objects pending for removal
+            foreach (IDisplayObject obj in removingObjects)
+            {
+                objects.Remove(obj);
+            }
+            removingObjects.Clear();
+
+            //add objects pending for addition
+            foreach (IDisplayObject obj in addingObjects)
+            {
+                objects.Add(obj);
+            }
+            addingObjects.Clear();
+        }
+
+        public void Update(GameTime gameTime)
         {
             foreach (IDisplayObject obj in objects)
             {
-                obj.Update();
+                obj.Update(gameTime);
+            }
+            CleanUp();
+        }
+
+        public void Draw(GameTime gameTime)
+        {
+            foreach (IDisplayObject obj in objects)
+            {
+                obj.Draw(gameTime);
             }
         }
 
@@ -42,7 +71,7 @@ namespace FPSGame.Engine
         {
             if (!IsObjectRegistered(obj))
             {
-                objects.Add(obj);
+                addingObjects.Add(obj);
             }
         }
 
@@ -50,13 +79,13 @@ namespace FPSGame.Engine
         {
             if (IsObjectRegistered(obj))
             {
-                objects.Remove(obj);
+                removingObjects.Remove(obj);
             }
         }
 
         public void RemoveAllObjects()
         {
-            objects.Clear();
+            removingObjects.Clear();
         }
 
         public void NotifyAllObservers(IGameEvent evt)

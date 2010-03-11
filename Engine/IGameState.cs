@@ -6,7 +6,7 @@ using FPSGame.Core;
 
 namespace FPSGame.Engine
 {
-    interface IGameState : IObject
+    interface IGameState : IObject, Drawable
     {
         void SetNextState(IGameState state);
 

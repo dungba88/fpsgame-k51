@@ -10,21 +10,37 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using FPSGame.Engine;
 
 namespace FPSGame
 {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Microsoft.Xna.Framework.Game
+    public class FPSGame : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public Game1()
+        private static FPSGame instance = new FPSGame();
+
+        private IGameState currentState = null;
+        private ICamera fpsCamera = null;
+
+        public static FPSGame GetInstance()
+        {
+            return instance;
+        }
+
+        private FPSGame()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+        }
+
+        public ICamera GetFPSCamera()
+        {
+            return fpsCamera;
         }
 
         /// <summary>
@@ -73,6 +89,10 @@ namespace FPSGame
                 this.Exit();
 
             // TODO: Add your update logic here
+            if (currentState != null)
+            {
+                currentState.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
@@ -86,6 +106,10 @@ namespace FPSGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            if (currentState != null)
+            {
+                currentState.Draw(gameTime);
+            }
 
             base.Draw(gameTime);
         }

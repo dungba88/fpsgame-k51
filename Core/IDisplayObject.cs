@@ -6,18 +6,18 @@ using Microsoft.Xna.Framework;
 
 namespace FPSGame.Core
 {
-    interface IDisplayObject : IObject
+    interface IDisplayObject : IObject, Drawable
     {
-        Vector3 getPosition();
+        Vector3 GetPosition();
 
-        void setPosition(Vector3 pos);
+        void SetPosition(Vector3 pos);
 
-        Vector3 getRotation();
+        Vector3 GetRotation();
 
-        void setRotation(Vector3 rot);
+        void SetRotation(Vector3 rot);
 
-        Matrix getWorld();
+        Matrix GetWorld();
 
-        Matrix setWorld();
+        void SetWorld(Matrix world);
     }
 }
