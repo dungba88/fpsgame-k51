@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework;
 
 namespace FPSGame.Sprite
 {
-    public class Component: IActionDispatcher, IComponent
+    public class Component: IComponent
     {
         private Texture2D texture;
         private Texture2D textureoff;
@@ -19,10 +19,12 @@ namespace FPSGame.Sprite
         private double y;
         private bool dead;
 
-        public Component(Texture2D texture, Texture2D textureoff, bool defaultActionListener)
+        public Component(Texture2D texture, Texture2D textureoff, double x, double y, bool defaultActionListener)
         {
             this.texture = texture;
             this.textureoff = textureoff;
+            this.x = x;
+            this.y = y;
             currentTexture = texture;
             listeners = new ArrayList();
             listeners.Add(new DefaultActionListener());
@@ -56,12 +58,12 @@ namespace FPSGame.Sprite
 
         public double GetWidth()
         {
-            return texture.Width;
+            return currentTexture.Width;
         }
 
         public double GetHeight()
         {
-            return texture.Height;
+            return currentTexture.Height;
         }
 
         public void Dispose()
@@ -72,7 +74,7 @@ namespace FPSGame.Sprite
         public void Draw(GameTime gameTime)
         {
             if (dead) return;
-            FPSGame.GetInstance().DrawSprite(currentTexture, new Vector2((float)x, (float)y), Color.TransparentBlack);
+            FPSGame.GetInstance().DrawSprite(currentTexture, new Vector2((float)x, (float)y), Color.Aqua);
         }
 
         public void TriggerActionPerformed(IActionEvent evt)

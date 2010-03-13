@@ -1,0 +1,10 @@
+Content\Images\back.xnb
+Content\Images\back_off.xnb
+Content\Images\credits.xnb
+Content\Images\credits_off.xnb
+Content\Images\exitgame.xnb
+Content\Images\exitgame_off.xnb
+Content\Images\oneplayer.xnb
+Content\Images\oneplayer_off.xnb
+Content\Images\option.xnb
+Content\Images\option_off.xnb

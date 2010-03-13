@@ -53,7 +53,7 @@ namespace FPSGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
@@ -67,6 +67,18 @@ namespace FPSGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            ResourceManager.LoadTexture2D(Content, "back", ResourceManager.BACK_BUTTON);
+            ResourceManager.LoadTexture2D(Content, "back_off", ResourceManager.BACK_BUTTON);
+            ResourceManager.LoadTexture2D(Content, "credits", ResourceManager.ABOUT_BUTTON);
+            ResourceManager.LoadTexture2D(Content, "credits_off", ResourceManager.ABOUT_BUTTON_OFF);
+            ResourceManager.LoadTexture2D(Content, "exitgame", ResourceManager.EXIT_BUTTON);
+            ResourceManager.LoadTexture2D(Content, "exitgame_off", ResourceManager.EXIT_BUTTON_OFF);
+            ResourceManager.LoadTexture2D(Content, "oneplayer", ResourceManager.NEW_GAME_BUTTON);
+            ResourceManager.LoadTexture2D(Content, "oneplayer_off", ResourceManager.NEW_GAME_BUTTON_OFF);
+            ResourceManager.LoadTexture2D(Content, "option", ResourceManager.OPTION_BUTTON);
+            ResourceManager.LoadTexture2D(Content, "option_off", ResourceManager.OPTION_BUTTON_OFF);
+
+            SetGameState(new MainMenuState());
         }
 
         /// <summary>
@@ -107,17 +119,19 @@ namespace FPSGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
             if (currentState != null)
             {
                 currentState.Draw(gameTime);
             }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
         public void SetGameState(IGameState state)
         {
-            if (!currentState.IsDead())
+            if (currentState!=null&&!currentState.IsDead())
                 currentState.End();
             currentState = state;
             currentState.StartOver();
