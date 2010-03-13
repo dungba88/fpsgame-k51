@@ -71,6 +71,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
     </Reference>
@@ -88,10 +90,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ActionEvent.cs" />
     <Compile Include="Core\Debugger.cs" />
     <Compile Include="Core\DefaultKeyboardControls.cs" />
     <Compile Include="Core\Drawable.cs" />
+    <Compile Include="Core\IActionEvent.cs" />
     <Compile Include="Core\IDisplayObject.cs" />
+    <Compile Include="Core\IActionDispatcher.cs" />
+    <Compile Include="Core\IActionListener.cs" />
     <Compile Include="Engine\GameEvent\GameEvent.cs" />
     <Compile Include="Engine\GameEvent\IGameEvent.cs" />
     <Compile Include="Core\IKeyboardControls.cs" />
@@ -113,6 +119,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="FPSGame.cs" />
+    <Compile Include="Sprite\Component.cs" />
+    <Compile Include="Sprite\IComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

@@ -18,6 +18,7 @@
     <XnaPlatform>Windows</XnaPlatform>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=x86" />
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.EffectImporter, Version=3.0.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
@@ -37,6 +38,36 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Xclna.Xna.Animation.Content.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\back.png" />
+    <Compile Include="Images\back_off.png">
+      <Name>back_off</Name>
+    </Compile>
+    <Compile Include="Images\credits.png">
+      <Name>credits</Name>
+    </Compile>
+    <Compile Include="Images\credits_off.png">
+      <Name>credits_off</Name>
+    </Compile>
+    <Compile Include="Images\exitgame.png">
+      <Name>exitgame</Name>
+    </Compile>
+    <Compile Include="Images\exitgame_off.png">
+      <Name>exitgame_off</Name>
+    </Compile>
+    <Compile Include="Images\oneplayer.png">
+      <Name>oneplayer</Name>
+    </Compile>
+    <Compile Include="Images\oneplayer_off.png">
+      <Name>oneplayer_off</Name>
+    </Compile>
+    <Compile Include="Images\option.png">
+      <Name>option</Name>
+    </Compile>
+    <Compile Include="Images\option_off.png">
+      <Name>option_off</Name>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\v3.0\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

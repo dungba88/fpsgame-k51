@@ -122,5 +122,10 @@ namespace FPSGame
             currentState = state;
             currentState.StartOver();
         }
+
+        public void DrawSprite(Texture2D texture, Vector2 pos, Color col)
+        {
+            spriteBatch.Draw(texture, pos, col);
+        }
     }
 }
