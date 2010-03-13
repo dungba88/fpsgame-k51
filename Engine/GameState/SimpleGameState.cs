@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using FPSGame.Core;
 using Microsoft.Xna.Framework;
+using System.Collections;
+using FPSGame.Sprite;
+using Microsoft.Xna.Framework.Input;
 
 namespace FPSGame.Engine.GameState
 {
@@ -13,6 +16,12 @@ namespace FPSGame.Engine.GameState
         private bool ended;
         private IGameState prevState;
         private IGameState nextState;
+        private ArrayList components;
+
+        public void AddComponent(IComponent component)
+        {
+            components.Add(component);
+        }
 
         public void StartOver()
         {
@@ -35,12 +44,14 @@ namespace FPSGame.Engine.GameState
         {
             this.started = false;
             this.ended = false;
+            components = new ArrayList();
         }
 
         public void Begin()
         {
             if (!CheckNotStarted())
                 return;
+            components.Clear();
 
             started = true;
             OnBegin();
@@ -126,12 +137,47 @@ namespace FPSGame.Engine.GameState
 
         public abstract void OnBegin();
 
-        public abstract void OnUpdate(GameTime gameTime);
+        public void OnUpdate(GameTime gameTime)
+        {
+            MouseState state = Mouse.GetState();
+            if (state.LeftButton == ButtonState.Pressed)
+            {
+                TriggerActionPerformed(state.X, state.Y);
+            }
+            else
+            {
+                TriggerMouseMove(state.X, state.Y);
+            }
+        }
 
-        public abstract void OnDraw(GameTime gameTime);
+        public void OnDraw(GameTime gameTime)
+        {
+            foreach (IComponent comp in components)
+            {
+                comp.Draw(gameTime);
+            }
+        }
 
         public abstract void OnEnd();
 
         public abstract String GetName();
+
+        private void TriggerActionPerformed(double x, double y)
+        {
+            IActionEvent evt = new ActionEvent(null, x, y);
+            foreach (IComponent comp in components)
+            {
+                comp.TriggerActionPerformed(evt);
+            }
+        }
+
+        private void TriggerMouseMove(double x, double y)
+        {
+            IActionEvent evt = new ActionEvent(null, x, y);
+            foreach (IComponent comp in components)
+            {
+                comp.TriggerMouseMove(evt);
+            }
+        }
     }
 }

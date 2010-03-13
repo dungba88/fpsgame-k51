@@ -6,7 +6,7 @@ using FPSGame.Core;
 
 namespace FPSGame.Sprite
 {
-    public interface IComponent : Drawable
+    public interface IComponent : Drawable, IActionDispatcher
     {
         double GetX();
 

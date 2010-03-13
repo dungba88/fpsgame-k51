@@ -34,7 +34,7 @@ namespace FPSGame.Engine
 
         public static void LoadTexture2D(ContentManager content, String fileName, String resName)
         {
-            Texture2D texture = content.Load<Texture2D>("@Images/"+fileName);
+            Texture2D texture = content.Load<Texture2D>(@"Images/"+fileName);
             RegisterResource(resName, texture);
         }
 
@@ -45,16 +45,16 @@ namespace FPSGame.Engine
             resHashTable.Add(resName, res);
         }
 
-        public static object GetResource(String resName)
+        public static T GetResource<T>(String resName)
         {
             IDictionaryEnumerator enums = resHashTable.GetEnumerator();
             while (enums.MoveNext())
             {
                 String key = (String)enums.Key;
                 if (key == resName)
-                    return enums.Value;
+                    return (T)enums.Value;
             }
-            return null;
+            return default(T);
         }            
     }
 }
