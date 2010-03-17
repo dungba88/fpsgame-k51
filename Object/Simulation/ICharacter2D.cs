@@ -4,22 +4,20 @@ using System.Linq;
 using System.Text;
 using FPSGame.Core;
 
-namespace FPSGame.Object
+namespace FPSGame.Object.Simulation
 {
-    public interface ICharacter : IDisplayObject, Vulnerable
+    public interface ICharacter2D:IDisplayObject2D, Vulnerable
     {
-        void MoveForward();
-
-        void MoveBackward();
-
         void MoveLeft();
 
         void MoveRight();
 
-        void TurnLeft();
+        void MoveBackward();
 
-        void TurnRight();
+        void MoveForward();
 
         void Shoot();
+
+        void Rotate(double angle);
     }
 }
