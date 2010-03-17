@@ -7,7 +7,6 @@ namespace FPSGame.Object
 {
     interface IPlayerCharacter : ICharacter
     {
-
         void Yaw(double angle);
 
         void Pitch(double angle);

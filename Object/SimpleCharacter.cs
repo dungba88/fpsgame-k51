@@ -7,5 +7,9 @@ namespace FPSGame.Object
 {
     class SimpleCharacter : SimpleObject3D
     {
+        public SimpleCharacter(Model model)
+            : base(model)
+        {
+        }
     }
 }

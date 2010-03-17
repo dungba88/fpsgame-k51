@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace FPSGame.Core
 {
-    interface IDisplayObject : IObject, Drawable
+    public interface IDisplayObject : IObject, Drawable
     {
         Vector3 GetPosition();
 
