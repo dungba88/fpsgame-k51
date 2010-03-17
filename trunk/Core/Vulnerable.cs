@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FPSGame.Core
 {
-    public interface IVulnerable
+    public interface Vulnerable
     {
         void TakeDamage(int dmg);
     }

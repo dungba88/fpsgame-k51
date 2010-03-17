@@ -71,6 +71,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml">
       <Private>False</Private>
@@ -99,7 +100,7 @@
     <Compile Include="Core\IObserver.cs" />
     <Compile Include="Core\IPlayer.cs" />
     <Compile Include="Core\ISubject.cs" />
-    <Compile Include="Core\IVulnerable.cs" />
+    <Compile Include="Core\Vulnerable.cs" />
     <Compile Include="Core\MathUtils.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\FirstPersonCamera.cs" />
@@ -116,6 +117,8 @@
     <Compile Include="Object\IPlayerCharacter.cs" />
     <Compile Include="Object\SimpleCharacter.cs" />
     <Compile Include="Object\SimpleObject3D.cs" />
+    <Compile Include="Object\Simulation\ICharacter2D.cs" />
+    <Compile Include="Object\Simulation\IDisplayObject2D.cs" />
     <Compile Include="Program.cs">
       <SubType>Code</SubType>
     </Compile>
