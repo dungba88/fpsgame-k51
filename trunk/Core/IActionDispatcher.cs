@@ -7,7 +7,7 @@ namespace FPSGame.Core
 {
     public interface IActionDispatcher
     {
-        void AddActionListener(IActionListener al);
+        void AddActionListener(ActionListener al);
 
         void TriggerActionPerformed(IActionEvent evt);
 

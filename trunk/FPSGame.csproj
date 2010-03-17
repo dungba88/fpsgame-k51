@@ -87,17 +87,19 @@
   <ItemGroup>
     <Compile Include="Core\ActionEvent.cs" />
     <Compile Include="Core\Debugger.cs" />
+    <Compile Include="Core\DefaultActionListener.cs" />
     <Compile Include="Core\DefaultKeyboardControls.cs" />
     <Compile Include="Core\Drawable.cs" />
     <Compile Include="Core\IActionDispatcher.cs" />
     <Compile Include="Core\IActionEvent.cs" />
-    <Compile Include="Core\IActionListener.cs" />
+    <Compile Include="Core\ActionListener.cs" />
     <Compile Include="Core\IDisplayObject.cs" />
     <Compile Include="Core\IKeyboardControls.cs" />
     <Compile Include="Core\IObject.cs" />
     <Compile Include="Core\IObserver.cs" />
     <Compile Include="Core\IPlayer.cs" />
     <Compile Include="Core\ISubject.cs" />
+    <Compile Include="Core\IVulnerable.cs" />
     <Compile Include="Core\MathUtils.cs" />
     <Compile Include="Engine\Camera.cs" />
     <Compile Include="Engine\FirstPersonCamera.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="FPSGame.cs" />
     <Compile Include="Object\ICharacter.cs" />
     <Compile Include="Object\IPlayerCharacter.cs" />
+    <Compile Include="Object\SimpleCharacter.cs" />
     <Compile Include="Object\SimpleObject3D.cs" />
     <Compile Include="Program.cs">
       <SubType>Code</SubType>
