@@ -20,6 +20,9 @@ namespace FPSGame
     /// </summary>
     public class FPSGame : Microsoft.Xna.Framework.Game
     {
+        public const int WIDTH = 800;
+        public const int HEIGHT = 600;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
@@ -27,6 +30,8 @@ namespace FPSGame
 
         private IGameState currentState = null;
         private ICamera fpsCamera = null;
+        private bool isUpdating;
+        private bool shouldEnd;
 
         public static FPSGame GetInstance()
         {
@@ -36,7 +41,13 @@ namespace FPSGame
         private FPSGame()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = WIDTH;
+            graphics.PreferredBackBufferHeight = HEIGHT;
+            graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
+
+            isUpdating = false;
+            shouldEnd = false;
         }
 
         public ICamera GetFPSCamera()
@@ -98,8 +109,9 @@ namespace FPSGame
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
+            if (shouldEnd)
+                Exit();
+            isUpdating = true;
 
             // TODO: Add your update logic here
             if (currentState != null)
@@ -108,6 +120,7 @@ namespace FPSGame
             }
 
             base.Update(gameTime);
+            isUpdating = false;
         }
 
         /// <summary>
@@ -140,6 +153,24 @@ namespace FPSGame
         public void DrawSprite(Texture2D texture, Vector2 pos, Color col)
         {
             spriteBatch.Draw(texture, pos, col);
+        }
+
+        public void QuitGame()
+        {
+            if (isUpdating)
+            {
+                shouldEnd = true;
+            }
+        }
+
+        public void ShowMouse()
+        {
+            this.IsMouseVisible = true;
+        }
+
+        public void HideMouse()
+        {
+            this.IsMouseVisible = false;
         }
     }
 }

@@ -6,7 +6,20 @@ using FPSGame.Core;
 
 namespace FPSGame.Object
 {
-    interface ICharacter : IDisplayObject
+    public interface ICharacter : IDisplayObject, IVulnerable
     {
+        void MoveForward();
+
+        void MoveBackward();
+
+        void MoveLeft();
+
+        void MoveRight();
+
+        void TurnLeft();
+
+        void TurnRight();
+
+        void Shoot();
     }
 }

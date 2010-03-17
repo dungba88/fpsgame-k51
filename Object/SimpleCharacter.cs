@@ -5,11 +5,7 @@ using System.Text;
 
 namespace FPSGame.Object
 {
-    interface IPlayerCharacter : ICharacter
+    class SimpleCharacter : SimpleObject3D
     {
-
-        void Yaw(double angle);
-
-        void Pitch(double angle);
     }
 }

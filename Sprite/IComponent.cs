@@ -25,5 +25,7 @@ namespace FPSGame.Sprite
         void SwitchTextureOn();
 
         void SwitchTextureOff();
+
+        ActionListener GetDefaultActionListener();
     }
 }

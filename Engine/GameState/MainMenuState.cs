@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using FPSGame.Sprite;
 using System.Windows.Forms;
+using FPSGame.Core;
 
 namespace FPSGame.Engine.GameState
 {
@@ -25,13 +26,37 @@ namespace FPSGame.Engine.GameState
             Texture2D exit = ResourceManager.GetResource<Texture2D>(ResourceManager.EXIT_BUTTON);
             Texture2D exitOff = ResourceManager.GetResource<Texture2D>(ResourceManager.EXIT_BUTTON_OFF);
 
-            AddComponent(new Component(newGame, newGameOff, 0, 50, true));
-            AddComponent(new Component(option, optionOff, 0, 100, true));
-            AddComponent(new Component(exit, exitOff, 0, 150, true));
+            int w = FPSGame.GetInstance().GraphicsDevice.Viewport.Width;
+            int h = FPSGame.GetInstance().GraphicsDevice.Viewport.Height;
+
+            //create new buttons
+            IComponent compNewGame = new Component(newGame, newGameOff, w / 2, h / 2 + 100, true, true);
+            IComponent compOption = new Component(option, optionOff, w / 2, h / 2 + 150, true, true);
+            IComponent compExitGame = new Component(exit, exitOff, w / 2, h / 2 + 200, true, true);
+
+            ActionListener ngAL = compNewGame.GetDefaultActionListener();
+            ActionListener optAL = compOption.GetDefaultActionListener();
+            ActionListener egAL = compExitGame.GetDefaultActionListener();
+
+            egAL.SetActionPerformedMethod(new ActionListener.ActionPerformedMethod(ExitGame));
+
+            //add event listener
+            compExitGame.AddActionListener(egAL);
+
+            AddComponent(compNewGame);
+            AddComponent(compOption);
+            AddComponent(compExitGame);
+
+            FPSGame.GetInstance().ShowMouse();
         }
 
         public override void OnEnd()
         {
+        }
+
+        public void ExitGame(IActionEvent evt)
+        {
+            FPSGame.GetInstance().QuitGame();
         }
     }
 }

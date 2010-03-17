@@ -18,20 +18,28 @@ namespace FPSGame.Sprite
         private double x;
         private double y;
         private bool dead;
+        private bool centered;
+        private ActionListener defAL;
 
-        public Component(Texture2D texture, Texture2D textureoff, double x, double y, bool defaultActionListener)
+        public Component(Texture2D texture, Texture2D textureoff, double x, double y, bool defaultActionListener, bool centered)
         {
             this.texture = texture;
             this.textureoff = textureoff;
+            currentTexture = texture;
             this.x = x;
             this.y = y;
-            currentTexture = texture;
+            this.centered = centered;
             listeners = new ArrayList();
-            listeners.Add(new DefaultActionListener());
+            listeners.Add(defAL = new DefaultActionListener());
             dead = false;
         }
 
-        public void AddActionListener(IActionListener al)
+        public ActionListener GetDefaultActionListener()
+        {
+            return defAL;
+        }
+
+        public void AddActionListener(ActionListener al)
         {
             listeners.Add(al);
         }
@@ -74,27 +82,33 @@ namespace FPSGame.Sprite
         public void Draw(GameTime gameTime)
         {
             if (dead) return;
-            FPSGame.GetInstance().DrawSprite(currentTexture, new Vector2((float)x, (float)y), Color.Aqua);
+            Vector2 pos;
+            if (centered)
+                pos = new Vector2((float)x - currentTexture.Width / 2, (float)y-currentTexture.Height/2);
+            else
+                pos = new Vector2((float)x, (float)y);
+            FPSGame.GetInstance().DrawSprite(currentTexture, pos, Color.Aqua);
         }
 
         public void TriggerActionPerformed(IActionEvent evt)
         {
             if (!CheckInside(evt.GetX(), evt.GetY()))
                 return;
-            foreach (IActionListener al in listeners)
+
+            foreach (ActionListener al in listeners)
             {
-                al.OnActionPerformed(evt.CopyEventWithSource(this));
+                al.GetActionPerformedMethod()(evt.CopyEventWithSource(this));
             }
         }
 
         public void TriggerMouseMove(IActionEvent evt)
         {
-            foreach (IActionListener al in listeners)
+            foreach (ActionListener al in listeners)
             {
                 if (CheckInside(evt.GetX(), evt.GetY()))
-                    al.OnMouseOver(evt.CopyEventWithSource(this));
+                    al.GetMouseOverMethod()(evt.CopyEventWithSource(this));
                 else
-                    al.OnMouseOut(evt.CopyEventWithSource(this));
+                    al.GetMouseOutMethod()(evt.CopyEventWithSource(this));
             }
         }
 
@@ -115,23 +129,6 @@ namespace FPSGame.Sprite
             if (y < this.y || y > this.y + this.GetHeight())
                 return false;
             return true;
-        }
-    }
-
-    class DefaultActionListener : IActionListener
-    {
-        public void OnMouseOver(IActionEvent evt)
-        {
-            evt.GetSource().SwitchTextureOff();   
-        }
-
-        public void OnMouseOut(IActionEvent evt)
-        {
-            evt.GetSource().SwitchTextureOn();
-        }
-
-        public void OnActionPerformed(IActionEvent evt)
-        {
         }
     }
 }
