@@ -90,6 +90,10 @@ namespace FPSGame.Sprite
             FPSGame.GetInstance().DrawSprite(currentTexture, pos, Color.Aqua);
         }
 
+        public void Draw3D(GameTime gameTime)
+        {
+        }
+
         public void TriggerActionPerformed(IActionEvent evt)
         {
             if (!CheckInside(evt.GetX(), evt.GetY()))

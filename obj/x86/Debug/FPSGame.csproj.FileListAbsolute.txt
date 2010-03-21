@@ -14,3 +14,10 @@ C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\D
 C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\oneplayer_off.xnb
 C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\option.xnb
 C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\option_off.xnb
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\floor.xnb
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Maps\map1.xml
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Times New Roman.xnb
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\wall.xnb
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\floor111.xnb
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\wall222.xnb
+C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\ceiling222.xnb

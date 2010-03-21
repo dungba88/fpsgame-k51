@@ -8,3 +8,9 @@ Content\Images\oneplayer.xnb
 Content\Images\oneplayer_off.xnb
 Content\Images\option.xnb
 Content\Images\option_off.xnb
+Content\Images\floor.xnb
+Content\Times New Roman.xnb
+Content\Images\wall.xnb
+Content\Images\floor111.xnb
+Content\Images\wall222.xnb
+Content\Images\ceiling222.xnb

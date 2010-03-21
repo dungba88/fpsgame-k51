@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using FPSGame.Engine;
 using FPSGame.Engine.GameState;
+using FPSGame.Object;
+using FPSGame.Factory;
 
 namespace FPSGame
 {
@@ -22,14 +24,16 @@ namespace FPSGame
     {
         public const int WIDTH = 800;
         public const int HEIGHT = 600;
+        public const bool FULLSCREEN_ENABLED = false;
 
-        GraphicsDeviceManager graphics;
+        public GraphicsDeviceManager graphics { get; protected set; }
         SpriteBatch spriteBatch;
+        Brick brick, brick1;
 
         private static FPSGame instance = new FPSGame();
 
         private IGameState currentState = null;
-        private ICamera fpsCamera = null;
+        private FirstPersonCamera fpsCamera = null;
         private bool isUpdating;
         private bool shouldEnd;
 
@@ -43,14 +47,16 @@ namespace FPSGame
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = WIDTH;
             graphics.PreferredBackBufferHeight = HEIGHT;
-            graphics.IsFullScreen = true;
+            graphics.IsFullScreen = FULLSCREEN_ENABLED;
             Content.RootDirectory = "Content";
+            fpsCamera = new FirstPersonCamera(this, new Vector3(5, 2, 5), new Vector3(10, 2, 5), Vector3.Up);
+            Components.Add(fpsCamera);
 
             isUpdating = false;
             shouldEnd = false;
         }
 
-        public ICamera GetFPSCamera()
+        public FirstPersonCamera GetFPSCamera()
         {
             return fpsCamera;
         }
@@ -88,6 +94,17 @@ namespace FPSGame
             ResourceManager.LoadTexture2D(Content, "oneplayer_off", ResourceManager.NEW_GAME_BUTTON_OFF);
             ResourceManager.LoadTexture2D(Content, "option", ResourceManager.OPTION_BUTTON);
             ResourceManager.LoadTexture2D(Content, "option_off", ResourceManager.OPTION_BUTTON_OFF);
+            ResourceManager.LoadTexture2D(Content, "floor111", ResourceManager.FLOOR_TEXTURE);
+            ResourceManager.LoadTexture2D(Content, "wall222", ResourceManager.WALL_TEXTURE);
+            ResourceManager.LoadTexture2D(Content, "ceiling222", ResourceManager.CEILING_TEXTURE);
+            ResourceManager.RegisterResource(ResourceManager.FONT, Content.Load<SpriteFont>("Times New Roman"));
+
+            //brick = new Brick(Vector3.Zero, Vector3.Forward, Vector3.Up, 0.125f, ResourceManager.GetResource<Texture2D>(ResourceManager.FLOOR_TEXTURE));
+            //brick.Begin();
+            //brick1 = new Brick(new Vector3(0.25f, 0, 0.125f), Vector3.Forward, Vector3.Up, 0.125f, ResourceManager.GetResource<Texture2D>(ResourceManager.FLOOR_TEXTURE));
+            //brick1.Begin();
+
+            //MapLoader.GetInstance().BuildMap("Maps/map1.xml");
 
             SetGameState(new MainMenuState());
         }
@@ -117,8 +134,8 @@ namespace FPSGame
             if (currentState != null)
             {
                 currentState.Update(gameTime);
+                //ObjectManager.GetInstance().Update(gameTime);
             }
-
             base.Update(gameTime);
             isUpdating = false;
         }
@@ -136,6 +153,13 @@ namespace FPSGame
             if (currentState != null)
             {
                 currentState.Draw(gameTime);
+
+                //reset render state for 3D drawing
+                FPSGame.GetInstance().GraphicsDevice.RenderState.DepthBufferEnable = true;
+                FPSGame.GetInstance().GraphicsDevice.RenderState.AlphaBlendEnable = false;
+                FPSGame.GetInstance().GraphicsDevice.RenderState.AlphaTestEnable = false;
+
+                currentState.Draw3D(gameTime);
             }
             spriteBatch.End();
 
@@ -153,6 +177,12 @@ namespace FPSGame
         public void DrawSprite(Texture2D texture, Vector2 pos, Color col)
         {
             spriteBatch.Draw(texture, pos, col);
+        }
+
+        public void DrawString(String text, Vector2 pos, Color color)
+        {
+            SpriteFont font = ResourceManager.GetResource<SpriteFont>(ResourceManager.FONT);
+            spriteBatch.DrawString(font, text, pos, color);
         }
 
         public void QuitGame()

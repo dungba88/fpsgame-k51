@@ -38,6 +38,7 @@ namespace FPSGame.Engine.GameState
             ActionListener optAL = compOption.GetDefaultActionListener();
             ActionListener egAL = compExitGame.GetDefaultActionListener();
 
+            ngAL.SetActionPerformedMethod(new ActionListener.ActionPerformedMethod(NewGame));
             egAL.SetActionPerformedMethod(new ActionListener.ActionPerformedMethod(ExitGame));
 
             //add event listener
@@ -52,6 +53,12 @@ namespace FPSGame.Engine.GameState
 
         public override void OnEnd()
         {
+        }
+
+        public void NewGame(IActionEvent evt)
+        {
+            SetNextState(new NewGameState());
+            GoNext();
         }
 
         public void ExitGame(IActionEvent evt)

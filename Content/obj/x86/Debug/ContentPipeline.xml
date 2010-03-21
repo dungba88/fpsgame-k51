@@ -91,6 +91,60 @@
       <Output>C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\option_off.xnb</Output>
       <Time>2010-03-13T18:08:42.0347962+07:00</Time>
     </Item>
+    <Item>
+      <Source>Images\floor.jpg</Source>
+      <Name>Images\floor</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\floor.xnb</Output>
+      <Time>2010-03-22T01:42:14+07:00</Time>
+    </Item>
+    <Item>
+      <Source>Times New Roman.spritefont</Source>
+      <Name>Times New Roman</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Times New Roman.xnb</Output>
+      <Time>2010-03-21T06:27:59.550792+07:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\wall.png</Source>
+      <Name>Images\wall</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\wall.xnb</Output>
+      <Time>2010-03-21T17:34:14.639894+07:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\floor111.jpg</Source>
+      <Name>Images\floor111</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\floor111.xnb</Output>
+      <Time>2010-03-22T01:41:02.1439718+07:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\wall222.jpg</Source>
+      <Name>Images\wall222</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\wall222.xnb</Output>
+      <Time>2010-03-22T01:41:14.5366806+07:00</Time>
+    </Item>
+    <Item>
+      <Source>Images\ceiling222.JPG</Source>
+      <Name>Images\ceiling222</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\ceiling222.xnb</Output>
+      <Time>2010-03-22T01:22:08+07:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
