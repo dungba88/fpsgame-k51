@@ -31,14 +31,14 @@ namespace FPSGame.Engine
             // TODO: Construct any child components here
             this.pos = pos;
             this.dir = target-pos;
-            this.pos.Normalize();
+            this.dir.Normalize();
             this.up = up;
             Update();
 
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                     (float)Game.Window.ClientBounds.Width /
                     (float)Game.Window.ClientBounds.Height,
-                1, 100);
+                1, 1000);
         }
 
         /// <summary>
@@ -99,6 +99,36 @@ namespace FPSGame.Engine
         public bool IsDead()
         {
             return false;
+        }
+
+        public void SetPosition(Vector3 pos)
+        {
+            this.pos = pos;
+        }
+
+        public Vector3 GetPosition()
+        {
+            return pos;
+        }
+
+        public void SetDirection(Vector3 dir)
+        {
+            this.dir = dir;
+        }
+
+        public Vector3 GetDirection()
+        {
+            return dir;
+        }
+
+        public void SetUpVector(Vector3 up)
+        {
+            this.up = up;
+        }
+
+        public Vector3 GetUpVector()
+        {
+            return up;
         }
     }
 }

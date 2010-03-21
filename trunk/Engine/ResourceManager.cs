@@ -10,6 +10,8 @@ namespace FPSGame.Engine
 {
     public class ResourceManager
     {
+        public const String FONT = "font";
+
         public const String NEW_GAME_BUTTON = "newgamebtn";
 
         public const String NEW_GAME_BUTTON_OFF = "newgamebtnoff";
@@ -29,6 +31,12 @@ namespace FPSGame.Engine
         public const String BACK_BUTTON = "backbtn";
 
         public const String BACK_BUTTON_OFF = "backbtnoff";
+
+        public const String FLOOR_TEXTURE = "floortexture";
+
+        public const String WALL_TEXTURE = "walltexture";
+
+        public const String CEILING_TEXTURE = "ceilingtexture";
 
         private static Hashtable resHashTable = new Hashtable();
 

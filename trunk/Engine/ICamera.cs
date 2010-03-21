@@ -7,7 +7,7 @@ using FPSGame.Core;
 
 namespace FPSGame.Engine
 {
-    public interface ICamera : IObject
+    public interface ICamera : IObject, IGameComponent
     {
         Matrix GetView();
 
@@ -16,5 +16,17 @@ namespace FPSGame.Engine
         Matrix GetProjection();
 
         void SetProjection(Matrix m);
+
+        Vector3 GetPosition();
+
+        void SetPosition(Vector3 pos);
+
+        Vector3 GetDirection();
+
+        void SetDirection(Vector3 dir);
+
+        Vector3 GetUpVector();
+
+        void SetUpVector(Vector3 up);
     }
 }

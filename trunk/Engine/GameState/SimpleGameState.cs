@@ -73,6 +73,14 @@ namespace FPSGame.Engine.GameState
             OnDraw(gameTime);
         }
 
+        public void Draw3D(GameTime gameTime)
+        {
+            if (!CheckRunning())
+                return;
+
+            OnDraw3D(gameTime);
+        }
+
         public void End()
         {
             if (!CheckRunning())
@@ -137,7 +145,7 @@ namespace FPSGame.Engine.GameState
 
         public abstract void OnBegin();
 
-        public void OnUpdate(GameTime gameTime)
+        public virtual void OnUpdate(GameTime gameTime)
         {
             MouseState state = Mouse.GetState();
             if (state.LeftButton == ButtonState.Pressed)
@@ -150,11 +158,19 @@ namespace FPSGame.Engine.GameState
             }
         }
 
-        public void OnDraw(GameTime gameTime)
+        public virtual void OnDraw(GameTime gameTime)
         {
             foreach (IComponent comp in components)
             {
                 comp.Draw(gameTime);
+            }
+        }
+
+        public virtual void OnDraw3D(GameTime gameTime)
+        {
+            foreach (IComponent comp in components)
+            {
+                comp.Draw3D(gameTime);
             }
         }
 

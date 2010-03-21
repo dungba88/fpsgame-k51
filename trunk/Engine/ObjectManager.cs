@@ -29,6 +29,11 @@ namespace FPSGame.Engine
             return instance;
         }
 
+        public ArrayList GetObjects()
+        {
+            return objects;
+        }
+
         public void CleanUp()
         {
             //remove objects pending for removal
@@ -60,6 +65,14 @@ namespace FPSGame.Engine
             foreach (IDisplayObject obj in objects)
             {
                 obj.Draw(gameTime);
+            }
+        }
+
+        public void Draw3D(GameTime gameTime)
+        {
+            foreach (IDisplayObject obj in objects)
+            {
+                obj.Draw3D(gameTime);
             }
         }
 

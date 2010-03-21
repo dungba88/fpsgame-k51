@@ -31,7 +31,7 @@ namespace FPSGame.Object
 
         public virtual void Update(GameTime gameTime) {}
 
-        public virtual void Draw(GameTime gameTime) 
+        public virtual void Draw3D(GameTime gameTime)
         {
             Matrix[] transforms = new Matrix[model.Bones.Count];
             ICamera fpsCamera = FPSGame.GetInstance().GetFPSCamera();
@@ -47,6 +47,11 @@ namespace FPSGame.Object
                     be.World = GetWorld() * mesh.ParentBone.Transform;
                 }
             }
+        }
+
+        public virtual void Draw(GameTime gameTime) 
+        {
+            
         }
 
         public Vector3 GetPosition()

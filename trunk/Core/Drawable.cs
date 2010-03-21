@@ -9,5 +9,7 @@ namespace FPSGame.Core
     public interface Drawable
     {
         void Draw(GameTime gameTime);
+
+        void Draw3D(GameTime gameTime);
     }
 }
