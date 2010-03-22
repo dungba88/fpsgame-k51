@@ -38,6 +38,8 @@ namespace FPSGame.Engine
 
         public const String CEILING_TEXTURE = "ceilingtexture";
 
+        public const String PLAYER_DEFAULT_GUN = "playerdefgun";
+
         private static Hashtable resHashTable = new Hashtable();
 
         public static void LoadTexture2D(ContentManager content, String fileName, String resName)

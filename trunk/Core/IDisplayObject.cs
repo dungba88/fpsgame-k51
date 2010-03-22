@@ -8,16 +8,5 @@ namespace FPSGame.Core
 {
     public interface IDisplayObject : IObject, Drawable
     {
-        Vector3 GetPosition();
-
-        void SetPosition(Vector3 pos);
-
-        Vector3 GetRotation();
-
-        void SetRotation(Vector3 rot);
-
-        Matrix GetWorld();
-
-        void SetWorld(Matrix world);
     }
 }

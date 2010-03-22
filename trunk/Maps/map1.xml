@@ -5,7 +5,7 @@
 	<mission-description></mission-description>
 
 	<matrix-size>23 15</matrix-size>
-	<elem-size>4</elem-size>
+	<elem-size>6</elem-size>
 
 	<top-left>0 0 0</top-left>
 	<player>

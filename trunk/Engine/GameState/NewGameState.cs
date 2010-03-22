@@ -6,12 +6,15 @@ using FPSGame.Factory;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using FPSGame.Object;
+using FPSGame.Core;
 
 namespace FPSGame.Engine.GameState
 {
     public class NewGameState : SimpleGameState
     {
         MouseState prevMouseState;
+        private bool rightBtnReleased = true;
 
         public override String GetName()
         {
@@ -25,6 +28,8 @@ namespace FPSGame.Engine.GameState
                 FPSGame.GetInstance().Window.ClientBounds.Height / 2);
             prevMouseState = Mouse.GetState();
             FPSGame.GetInstance().HideMouse();
+            PlayerCharacter character = FPSGame.GetInstance().GetPlayer().CreatePlayer();
+            FPSGame.GetInstance().GetFPSCamera().ApplyToPlayer(character);
         }
 
         public override void OnDraw(GameTime gameTime)
@@ -44,22 +49,50 @@ namespace FPSGame.Engine.GameState
             //check for user input
             FirstPersonCamera camera = FPSGame.GetInstance().GetFPSCamera();
             KeyboardState kb = Keyboard.GetState();
+            MouseState ms = Mouse.GetState();
+            IKeyboardControls controls = FPSGame.GetInstance().GetPlayer().GetControls();
 
-            if (kb.IsKeyDown(Keys.Up))
+            if (kb.IsKeyDown(controls.MoveForwardKey()))
             {
                 camera.MoveForward();
             }
-            if (kb.IsKeyDown(Keys.Down))
+            if (kb.IsKeyDown(controls.MoveBackwardKey()))
             {
                 camera.MoveBackward();
             }
-            if (kb.IsKeyDown(Keys.Left))
+            if (kb.IsKeyDown(controls.MoveLeftKey()))
             {
                 camera.MoveLeft();
             }
-            if (kb.IsKeyDown(Keys.Right))
+            if (kb.IsKeyDown(controls.MoveRightKey()))
             {
                 camera.MoveRight();
+            }
+            if (kb.IsKeyDown(controls.CrouchKey()))
+            {
+                camera.SetCameraState("crouch");
+            }
+            else
+            {
+                if (camera.IsStateActive("crouch"))
+                    camera.UndoState();
+            }
+            if (ms.RightButton == ButtonState.Pressed && rightBtnReleased == true)
+            {
+                camera.SetCameraState("jump");
+                rightBtnReleased = false;
+            }
+            else
+            {
+                rightBtnReleased = true;
+            }
+            if (ms.LeftButton == ButtonState.Pressed)
+            {
+                FPSGame.GetInstance().GetPlayer().GetCharacter().GetGun().Shoot();
+            }
+            else
+            {
+                FPSGame.GetInstance().GetPlayer().GetCharacter().GetGun().StopShoot();
             }
 
             //Yaw rotation

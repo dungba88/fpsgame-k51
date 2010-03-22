@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace FPSGame.Core
 {
-    interface IKeyboardControls
+    public interface IKeyboardControls
     {
         Keys MoveForwardKey();
 
