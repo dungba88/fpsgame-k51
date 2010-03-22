@@ -38,7 +38,15 @@ namespace FPSGame.Engine
 
         public const String CEILING_TEXTURE = "ceilingtexture";
 
+        public const String JAIL_BARS = "jailbars";
+
         public const String PLAYER_DEFAULT_GUN = "playerdefgun";
+
+        public const String PLAYER_GUN_SND = "playergunsound";
+
+        public const String OPERA_THEME_SONG = "operatheme";
+
+        public const String GUNFIRE = "gunfire";
 
         private static Hashtable resHashTable = new Hashtable();
 

@@ -38,6 +38,12 @@ namespace FPSGame.Core
             return box;
         }
 
+        public static int Random(int min, int max)
+        {
+            Random r = new Random();
+            return r.Next(min, max);
+        }
+
         public static float ClampFloat(float value, float min, float max)
         {
             if (value < min) return min;

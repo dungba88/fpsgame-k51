@@ -4,7 +4,7 @@
 	<description>Demo 2D-map for AI</description>
 	<mission-description></mission-description>
 
-	<matrix-size>23 15</matrix-size>
+	<matrix-size>23 22</matrix-size>
 	<elem-size>6</elem-size>
 
 	<top-left>0 0 0</top-left>
@@ -13,21 +13,28 @@
 		<angle-of-view>270</angle-of-view>
 	</player> 
 	<content>
-		<matrixRow>0 0 0 0 0 0 0 * * * * * * * * * * * * * * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 * * * * * * * * * * * * * * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 * * * * * * * * * * * * * * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 * * * * * * * * * * * * * * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 * * * * * * * * * * * * * * * 0</matrixRow> 
-		<matrixRow>0 0 * * * * * * * * * * * * * * * * * * * * 0</matrixRow> 
-  		<matrixRow>0 0 * * 0 0 0 0 0 0 * * * * * * * * * * 0 0 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 * * * * * * * * * * * * * 0</matrixRow> 
+		<matrixRow>0 0 0 * * * * * * * * * * * * * * * * * * * 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 * * * * * * * * * * * * * 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 * * 0 * * * * * * * * * * 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 * * * * * * * * * * 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 0 0 * 0 0 0 * * 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * * * * * 0 * 0 0 0 * * 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 * 0 0 0 0 0 * * 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 * 0 * 0 0 0 * * 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 0 0 * * * * * * 0</matrixRow> 
+		<matrixRow>0 0 * * * * * * * * * 0 0 0 * 0 * * * * * * 0</matrixRow> 
+  		<matrixRow>0 0 * * 0 0 0 0 0 0 * * * * * 0 * * * * 0 0 0</matrixRow> 
   		<matrixRow>0 0 * * 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow> 
 		<matrixRow>0 0 * * 0 0 0 0 0 0 * * * * * * * * * * 0 0 0</matrixRow> 
 		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow> 
 		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 * * * * * *</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 * * * * * *</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 * * 0 0 0 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 * * 0 0 0 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 * * 0 0 0 0</matrixRow>
+		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow>
 	</content>
 </map-2d>
 

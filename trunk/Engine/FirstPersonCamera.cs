@@ -16,6 +16,7 @@ namespace FPSGame.Engine
         private float normalY;
         private float delta;
         private CameraState state;
+        private bool running;
 
         public FirstPersonCamera(Game game, Vector3 pos, Vector3 target, Vector3 up)
             : base(game, pos, target, up)
