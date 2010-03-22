@@ -7,6 +7,7 @@ using FPSGame.Core;
 using FPSGame.Factory;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using FPSGame.Engine;
 
 namespace FPSGame.Object
 {
@@ -15,6 +16,15 @@ namespace FPSGame.Object
         private Vector2 index;
         private Wall3D[] walls;
         private String symbol;
+
+        public Wall3D[] GetWalls()
+        {
+            return walls;
+        }
+
+        public Brick()
+        {
+        }
 
         public Brick(Vector2 index, Vector3 pos, Vector3 normal, Vector3 up, float width, float height, Texture2D texture, String symbol)
             : base(pos, normal, up, width, height, texture)
@@ -132,21 +142,62 @@ namespace FPSGame.Object
             return false;
         }
 
-        private Wall3D CreateWall(float x, float baseY, float z, Vector3 normal)
+        public Wall3D CreateWall(float x, float baseY, float z, Vector3 normal, Texture2D texture)
+        {
+            float wallHeight = width * 1.2f;
+            return (Wall3D)TerrainFactory.CreateWall(x, baseY + wallHeight / 2, z, width, wallHeight, normal, texture);
+        }
+
+        public Wall3D CreateWall(float x, float baseY, float z, Vector3 normal)
         {
             float wallHeight = width * 1.2f;
             return (Wall3D)TerrainFactory.CreateWall(x, baseY + wallHeight / 2, z, width, wallHeight, normal);
         }
 
-        private void BuildWalls()
+        public Wall3D CreateWall(int i)
+        {
+            Vector3 pos = GetPosition();
+            if (i == 0) return CreateWall(pos.X - width / 2, pos.Y, pos.Z, new Vector3(1, 0, 0));
+            if (i == 1) return CreateWall(pos.X + width / 2, pos.Y, pos.Z, new Vector3(-1, 0, 0));
+            if (i == 2) return CreateWall(pos.X, pos.Y, pos.Z - height / 2, new Vector3(0, 0, 1));
+            if (i == 3) return CreateWall(pos.X, pos.Y, pos.Z + height / 2, new Vector3(0, 0, -1));
+            return null;
+        }
+
+        public void CreateDoubleSideWall(int i, Texture2D texture)
+        {
+            Vector3 pos = GetPosition();
+            if (i == 0)
+            {
+                CreateWall(pos.X - width / 2, pos.Y, pos.Z, new Vector3(1, 0, 0), texture).Begin();
+                CreateWall(pos.X - width / 2, pos.Y, pos.Z, new Vector3(-1, 0, 0), texture).Begin();
+            }
+            if (i == 1)
+            {
+                CreateWall(pos.X + width / 2, pos.Y, pos.Z, new Vector3(-1, 0, 0), texture).Begin();
+                CreateWall(pos.X + width / 2, pos.Y, pos.Z, new Vector3(1, 0, 0), texture).Begin();
+            }
+            if (i == 2)
+            {
+                CreateWall(pos.X, pos.Y, pos.Z - height / 2, new Vector3(0, 0, 1), texture).Begin();
+                CreateWall(pos.X, pos.Y, pos.Z - height / 2, new Vector3(0, 0, -1), texture).Begin();
+            }
+            if (i == 3)
+            {
+                CreateWall(pos.X, pos.Y, pos.Z + height / 2, new Vector3(0, 0, -1)).Begin();
+                CreateWall(pos.X, pos.Y, pos.Z + height / 2, new Vector3(0, 0, 2)).Begin();
+            }
+        }
+
+        protected virtual void BuildWalls()
         {
             if (symbol == "*") return;
-            Vector3 pos = GetPosition();
+            
             if (walls[0] == null)
             {
                 if (CheckWestSide())
                 {
-                    walls[0] = CreateWall(pos.X - width / 2, pos.Y, pos.Z, new Vector3(1, 0, 0));
+                    walls[0] = CreateWall(0);
                     walls[0].Begin();
                 }
             }
@@ -155,7 +206,7 @@ namespace FPSGame.Object
             {
                 if (CheckEastSide())
                 {
-                    walls[1] = CreateWall(pos.X + width / 2, pos.Y, pos.Z, new Vector3(-1, 0, 0));
+                    walls[1] = CreateWall(1);
                     walls[1].Begin();
                 }
             }
@@ -164,7 +215,7 @@ namespace FPSGame.Object
             {
                 if (CheckNorthSide())
                 {
-                    walls[2] = CreateWall(pos.X, pos.Y, pos.Z - height / 2, new Vector3(0, 0, 1));
+                    walls[2] = CreateWall(2);
                     walls[2].Begin();
                 }
             }
@@ -173,7 +224,7 @@ namespace FPSGame.Object
             {
                 if (CheckSouthSide())
                 {
-                    walls[3] = CreateWall(pos.X, pos.Y, pos.Z + height / 2, new Vector3(0, 0, -1));
+                    walls[3] = CreateWall(3);
                     walls[3].Begin();
                 }
             }

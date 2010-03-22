@@ -110,17 +110,17 @@ namespace FPSGame.Factory
                 {
                     s = node.InnerText.Split(new char[] { ' ' });
                     //parse content
+                    Vector2 index;
                     for (int j = 0; j < s.Length; j++)
                     {
                         String data = s[j];
                         switch (data)
                         {
                             case "*":
-                            case "1":
                                 break;
                             case "0":
-                                Vector2 index = new Vector2(i, j);
-                                obj = TerrainFactory.CreateBrick(topleft.X+(i+0.5f)*elemSize, topleft.Y, topleft.Z+(j+0.5f)*elemSize, elemSize, index, data);
+                                index = new Vector2(i, j);
+                                obj = TerrainFactory.CreateBrick(topleft.X + (i + 0.5f) * elemSize, topleft.Y, topleft.Z + (j + 0.5f) * elemSize, elemSize, index, data);
                                 map.AddConstantObject(obj, i, j);
                                 break;
                             default:

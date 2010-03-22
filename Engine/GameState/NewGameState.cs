@@ -30,6 +30,7 @@ namespace FPSGame.Engine.GameState
             FPSGame.GetInstance().HideMouse();
             PlayerCharacter character = FPSGame.GetInstance().GetPlayer().CreatePlayer();
             FPSGame.GetInstance().GetFPSCamera().ApplyToPlayer(character);
+            EffectUtils.PlaySound(ResourceManager.OPERA_THEME_SONG, true);
         }
 
         public override void OnDraw(GameTime gameTime)
@@ -51,23 +52,33 @@ namespace FPSGame.Engine.GameState
             KeyboardState kb = Keyboard.GetState();
             MouseState ms = Mouse.GetState();
             IKeyboardControls controls = FPSGame.GetInstance().GetPlayer().GetControls();
+            bool running = false;
 
             if (kb.IsKeyDown(controls.MoveForwardKey()))
             {
                 camera.MoveForward();
+                running = true;
             }
             if (kb.IsKeyDown(controls.MoveBackwardKey()))
             {
                 camera.MoveBackward();
+                running = true;
             }
             if (kb.IsKeyDown(controls.MoveLeftKey()))
             {
                 camera.MoveLeft();
+                running = true;
             }
             if (kb.IsKeyDown(controls.MoveRightKey()))
             {
                 camera.MoveRight();
+                running = true;
             }
+            if (running)
+                FPSGame.GetInstance().GetPlayer().GetCharacter().Running();
+            else
+                FPSGame.GetInstance().GetPlayer().GetCharacter().StopRunning();
+
             if (kb.IsKeyDown(controls.CrouchKey()))
             {
                 camera.SetCameraState("crouch");
@@ -88,11 +99,11 @@ namespace FPSGame.Engine.GameState
             }
             if (ms.LeftButton == ButtonState.Pressed)
             {
-                FPSGame.GetInstance().GetPlayer().GetCharacter().GetGun().Shoot();
+                FPSGame.GetInstance().GetPlayer().GetCharacter().Shoot();
             }
             else
             {
-                FPSGame.GetInstance().GetPlayer().GetCharacter().GetGun().StopShoot();
+                FPSGame.GetInstance().GetPlayer().GetCharacter().StopShooting();
             }
 
             //Yaw rotation
@@ -112,6 +123,7 @@ namespace FPSGame.Engine.GameState
         public override void OnEnd()
         {
             FPSGame.GetInstance().ShowMouse();
+            EffectUtils.StopSound(ResourceManager.OPERA_THEME_SONG);
         }
     }
 }

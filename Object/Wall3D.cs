@@ -21,14 +21,25 @@ namespace FPSGame.Object
         private int[] Indexes;
         private BasicEffect quadEffect;
         private VertexDeclaration quadVertexDecl;
+        private Texture2D texture;
 
         private VertexPositionNormalTexture[] Vertices;
+
+        public Texture2D GetTexture()
+        {
+            return texture;
+        }
+        
+        public Wall3D()
+        {
+        }
 
         public Wall3D(Vector3 pos, Vector3 normal, Vector3 up, float width, float height, Texture2D texture)
         {
             Vertices = new VertexPositionNormalTexture[4];
             Indexes = new int[6];
             dead = false;
+            this.texture = texture;
             Initialize(pos, normal, up, width, height);
 
             quadEffect = new BasicEffect(FPSGame.GetInstance().GraphicsDevice, null);
@@ -129,7 +140,7 @@ namespace FPSGame.Object
         {
         }
 
-        public void Draw3D(GameTime gameTime)
+        public virtual void Draw3D(GameTime gameTime)
         {
             FPSGame.GetInstance().GraphicsDevice.VertexDeclaration = quadVertexDecl;
             quadEffect.Begin();

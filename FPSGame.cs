@@ -106,7 +106,11 @@ namespace FPSGame
             ResourceManager.LoadTexture2D(Content, "wall222", ResourceManager.WALL_TEXTURE);
             ResourceManager.LoadTexture2D(Content, "ceiling222", ResourceManager.CEILING_TEXTURE);
             ResourceManager.LoadTexture2D(Content, "playergun", ResourceManager.PLAYER_DEFAULT_GUN);
+            ResourceManager.LoadTexture2D(Content, "jailbars", ResourceManager.JAIL_BARS);
+            ResourceManager.LoadTexture2D(Content, "gunfire1", ResourceManager.GUNFIRE);
             ResourceManager.RegisterResource(ResourceManager.FONT, Content.Load<SpriteFont>("Times New Roman"));
+            ResourceManager.RegisterResource(ResourceManager.PLAYER_GUN_SND, Content.Load<SoundEffect>(@"Sounds/Gun 5"));
+            ResourceManager.RegisterResource(ResourceManager.OPERA_THEME_SONG, Content.Load<SoundEffect>(@"Sounds/opera"));
 
             //brick = new Brick(Vector3.Zero, Vector3.Forward, Vector3.Up, 0.125f, ResourceManager.GetResource<Texture2D>(ResourceManager.FLOOR_TEXTURE));
             //brick.Begin();
@@ -161,7 +165,7 @@ namespace FPSGame
             spriteBatch.Begin();
             if (currentState != null)
             {
-                currentState.Draw(gameTime);
+                currentState.Draw(gameTime);   
 
                 //reset render state for 3D drawing
                 FPSGame.GetInstance().GraphicsDevice.RenderState.DepthBufferEnable = true;
@@ -186,6 +190,11 @@ namespace FPSGame
         public void DrawSprite(Texture2D texture, Vector2 pos, Color col)
         {
             spriteBatch.Draw(texture, pos, col);
+        }
+
+        public void DrawSprite(Texture2D texture, Vector2 pos, int depth)
+        {
+            spriteBatch.Draw(texture, pos, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, depth);
         }
 
         public void DrawSprite(Texture2D texture, Vector2 pos)
