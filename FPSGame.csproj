@@ -97,6 +97,7 @@
     <Compile Include="Core\ActionListener.cs" />
     <Compile Include="Core\IBoxShaped.cs" />
     <Compile Include="Core\IDisplayObject.cs" />
+    <Compile Include="Core\IDisplayObject3D.cs" />
     <Compile Include="Core\IKeyboardControls.cs" />
     <Compile Include="Core\IMap.cs" />
     <Compile Include="Core\IObject.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Core\IPlayer.cs" />
     <Compile Include="Core\ISphereShaped.cs" />
     <Compile Include="Core\ISubject.cs" />
+    <Compile Include="Core\Player.cs" />
     <Compile Include="Core\Vulnerable.cs" />
     <Compile Include="Core\MathUtils.cs" />
     <Compile Include="Engine\Camera.cs" />
@@ -120,6 +122,9 @@
     <Compile Include="Factory\MapLoader.cs" />
     <Compile Include="Factory\TerrainFactory.cs" />
     <Compile Include="FPSGame.cs" />
+    <Compile Include="Object\Gun.cs" />
+    <Compile Include="Object\Line.cs" />
+    <Compile Include="Object\PlayerCharacter.cs" />
     <Compile Include="Object\Wall3D.cs" />
     <Compile Include="Object\ICharacter.cs" />
     <Compile Include="Object\IPlayerCharacter.cs" />

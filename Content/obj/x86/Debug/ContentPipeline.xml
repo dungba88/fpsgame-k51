@@ -145,6 +145,15 @@
       <Output>C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\ceiling222.xnb</Output>
       <Time>2010-03-22T01:22:08+07:00</Time>
     </Item>
+    <Item>
+      <Source>Images\playergun.png</Source>
+      <Name>Images\playergun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Griever\Documents\Visual Studio 2008\Projects\FPSGame\FPSGame\bin\x86\Debug\Content\Images\playergun.xnb</Output>
+      <Time>2010-03-22T05:58:07.746185+07:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

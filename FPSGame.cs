@@ -14,6 +14,7 @@ using FPSGame.Engine;
 using FPSGame.Engine.GameState;
 using FPSGame.Object;
 using FPSGame.Factory;
+using FPSGame.Core;
 
 namespace FPSGame
 {
@@ -34,6 +35,7 @@ namespace FPSGame
 
         private IGameState currentState = null;
         private FirstPersonCamera fpsCamera = null;
+        private Player player;
         private bool isUpdating;
         private bool shouldEnd;
 
@@ -51,9 +53,15 @@ namespace FPSGame
             Content.RootDirectory = "Content";
             fpsCamera = new FirstPersonCamera(this, new Vector3(5, 2, 5), new Vector3(10, 2, 5), Vector3.Up);
             Components.Add(fpsCamera);
+            player = new Player();
 
             isUpdating = false;
             shouldEnd = false;
+        }
+
+        public Player GetPlayer()
+        {
+            return player;
         }
 
         public FirstPersonCamera GetFPSCamera()
@@ -97,6 +105,7 @@ namespace FPSGame
             ResourceManager.LoadTexture2D(Content, "floor111", ResourceManager.FLOOR_TEXTURE);
             ResourceManager.LoadTexture2D(Content, "wall222", ResourceManager.WALL_TEXTURE);
             ResourceManager.LoadTexture2D(Content, "ceiling222", ResourceManager.CEILING_TEXTURE);
+            ResourceManager.LoadTexture2D(Content, "playergun", ResourceManager.PLAYER_DEFAULT_GUN);
             ResourceManager.RegisterResource(ResourceManager.FONT, Content.Load<SpriteFont>("Times New Roman"));
 
             //brick = new Brick(Vector3.Zero, Vector3.Forward, Vector3.Up, 0.125f, ResourceManager.GetResource<Texture2D>(ResourceManager.FLOOR_TEXTURE));
@@ -179,6 +188,11 @@ namespace FPSGame
             spriteBatch.Draw(texture, pos, col);
         }
 
+        public void DrawSprite(Texture2D texture, Vector2 pos)
+        {
+            DrawSprite(texture, pos, Color.White);
+        }
+
         public void DrawString(String text, Vector2 pos, Color color)
         {
             SpriteFont font = ResourceManager.GetResource<SpriteFont>(ResourceManager.FONT);
@@ -201,6 +215,11 @@ namespace FPSGame
         public void HideMouse()
         {
             this.IsMouseVisible = false;
+        }
+
+        public SpriteBatch GetSpriteBatch()
+        {
+            return spriteBatch;
         }
     }
 }
