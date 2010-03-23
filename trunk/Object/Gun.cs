@@ -177,7 +177,7 @@ namespace FPSGame.Object
                 return (int)(MAX_SHOCK / 1.5);
             //shock is increases when running
             if (FPSGame.GetInstance().GetPlayer().GetCharacter().IsRunning())
-                return (int)(MAX_SHOCK * 1.5);
+                return (int)(MAX_SHOCK * 1.2);
             return MAX_SHOCK;
         }
 
