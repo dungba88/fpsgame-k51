@@ -51,7 +51,7 @@ namespace FPSGame
             graphics.PreferredBackBufferHeight = HEIGHT;
             graphics.IsFullScreen = FULLSCREEN_ENABLED;
             Content.RootDirectory = "Content";
-            fpsCamera = new FirstPersonCamera(this, new Vector3(5, 2, 5), new Vector3(10, 2, 5), Vector3.Up);
+            fpsCamera = new FirstPersonCamera(this, new Vector3(3, 2, 50), new Vector3(3, 2, 10), Vector3.Up);
             Components.Add(fpsCamera);
             player = new Player();
 
