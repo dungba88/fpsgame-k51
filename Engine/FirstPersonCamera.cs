@@ -109,7 +109,7 @@ namespace FPSGame.Engine
             SetPosition(GetPosition() + GetAbsoluteDirection() * GetSpeed());
             if (CheckCollision())
             {
-                SetPosition(oldPos);
+                //SetPosition(oldPos);
             }
             else
             {
@@ -123,7 +123,7 @@ namespace FPSGame.Engine
             SetPosition(GetPosition() - GetAbsoluteDirection() * GetSpeed());
             if (CheckCollision())
             {
-                SetPosition(oldPos);
+                //SetPosition(oldPos);
             }
             else
             {
@@ -137,7 +137,7 @@ namespace FPSGame.Engine
             SetPosition(GetPosition() + Vector3.Cross(GetAbsoluteUpVector(), GetAbsoluteDirection()) * GetSpeed());
             if (CheckCollision())
             {
-                SetPosition(oldPos);
+                //SetPosition(oldPos);
             }
             else
             {
@@ -151,7 +151,7 @@ namespace FPSGame.Engine
             SetPosition(GetPosition() - Vector3.Cross(GetAbsoluteUpVector(), GetAbsoluteDirection()) * GetSpeed());
             if (CheckCollision())
             {
-                SetPosition(oldPos);
+                //SetPosition(oldPos);
             }
             else
             {

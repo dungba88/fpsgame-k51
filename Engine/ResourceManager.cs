@@ -48,6 +48,10 @@ namespace FPSGame.Engine
 
         public const String GUNFIRE = "gunfire";
 
+        public const String TERRORIST = "terrorist";
+
+        public const String TERRORIST_WEAPON = "terweapon";
+
         private static Hashtable resHashTable = new Hashtable();
 
         public static void LoadTexture2D(ContentManager content, String fileName, String resName)
@@ -58,9 +62,14 @@ namespace FPSGame.Engine
 
         public static void RegisterResource(String resName, object res)
         {
-            if (resHashTable.ContainsKey(resName)) 
+            if (IsResourceRegistered(resName)) 
                 return;
             resHashTable.Add(resName, res);
+        }
+
+        public static bool IsResourceRegistered(String resName)
+        {
+            return (resHashTable.ContainsKey(resName));
         }
 
         public static T GetResource<T>(String resName)

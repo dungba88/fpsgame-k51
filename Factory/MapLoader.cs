@@ -9,6 +9,7 @@ using System.Xml;
 using FPSGame.Object;
 using FPSGame.Engine;
 using Microsoft.Xna.Framework.Graphics;
+using XNAnimation;
 
 namespace FPSGame.Factory
 {
@@ -97,12 +98,15 @@ namespace FPSGame.Factory
                 }
             }
 
+            IDisplayObject3D obj;
+            obj = TerrainFactory.CreateRoof(topleft.X + map.GetWidth() * elemSize / 2, topleft.Y + elemSize * 1.2f, topleft.Z + map.GetHeight() * elemSize / 2, elemSize * map.GetWidth(), elemSize * map.GetHeight());
+            obj.Begin();
+
             nodes = xml.GetElementsByTagName("content");
             enums = nodes.Item(0).ChildNodes.GetEnumerator();
             int i=0;
-            IDisplayObject obj;
-            obj = TerrainFactory.CreateRoof(topleft.X + map.GetWidth() * elemSize / 2, topleft.Y + elemSize * 1.2f, topleft.Z + map.GetHeight() * elemSize / 2, elemSize * map.GetWidth(), elemSize * map.GetHeight());
-            obj.Begin();
+
+            //load map terrain
             while (enums.MoveNext())
             {
                 XmlNode node = (XmlNode)enums.Current;
@@ -120,14 +124,93 @@ namespace FPSGame.Factory
                                 break;
                             case "0":
                                 index = new Vector2(i, j);
-                                obj = TerrainFactory.CreateBrick(topleft.X + (i + 0.5f) * elemSize, topleft.Y, topleft.Z + (j + 0.5f) * elemSize, elemSize, index, data);
-                                map.AddConstantObject(obj, i, j);
+                                //obj = TerrainFactory.CreateBrick(topleft.X + (i + 0.5f) * elemSize, topleft.Y, topleft.Z + (j + 0.5f) * elemSize, elemSize, index, data);
+                                //map.AddConstantObject(obj, i, j);
                                 break;
                             default:
                                 break;
                         }
                     }
                     i++;
+                }
+            }
+
+            //load object
+            nodes = xml.GetElementsByTagName("models");
+            enums = nodes.Item(0).ChildNodes.GetEnumerator();
+            i = 0;
+            while (enums.MoveNext())
+            {
+                XmlNode node = (XmlNode)enums.Current;
+                if (node.Name == "model")
+                {
+                    String mname = "";
+                    String file = "";
+                    int x = 0;
+                    int y = 0;
+                    float scale = 1;
+                    IEnumerator enum1 = node.ChildNodes.GetEnumerator();
+                    while (enum1.MoveNext())
+                    {
+                        XmlNode child = (XmlNode)enum1.Current;
+                        if (child.Name == "name")
+                            mname = child.InnerText;
+                        else if (child.Name == "file-name")
+                        {
+                            file = child.InnerText;
+                        }
+                        else if (child.Name == "position")
+                        {
+                            s = child.InnerText.Split(c);
+                            x = int.Parse(s[0]);
+                            y = int.Parse(s[1]);
+                        }
+                        else if (child.Name == "scale")
+                        {
+                            scale = float.Parse(child.InnerText);
+                        }
+                    }
+
+                    obj = TerrainFactory.CreateModel(mname, file, topleft.X + (x) * elemSize, topleft.Y, topleft.Z - (y) * elemSize, scale, new Vector3(3f, 0, -4), 1000);
+                    map.AddObject(obj);
+                }
+            }
+
+            //load enemy
+            nodes = xml.GetElementsByTagName("enemies");
+            enums = nodes.Item(0).ChildNodes.GetEnumerator();
+            i = 0;
+            while (enums.MoveNext())
+            {
+                XmlNode node = (XmlNode)enums.Current;
+                if (node.Name == "enemy")
+                {
+                    String mname = "";
+                    String file = "";
+                    int x = 0;
+                    int y = 0;
+                    IEnumerator enum1 = node.ChildNodes.GetEnumerator();
+                    while (enum1.MoveNext())
+                    {
+                        XmlNode child = (XmlNode)enum1.Current;
+                        if (child.Name == "name")
+                            mname = child.InnerText;
+                        else if (child.Name == "file-name")
+                        {
+                            file = child.InnerText;
+                        }
+                        else if (child.Name == "position")
+                        {
+                            s = child.InnerText.Split(c);
+                            x = int.Parse(s[0]);
+                            y = int.Parse(s[1]);
+                        }
+                    }
+
+                    SkinnedModel m = FPSGame.GetInstance().LoadModel<SkinnedModel>(file, mname);
+                    obj = new SimpleCharacter(m, 0.35f, Vector3.Zero, null, 2.8f);
+                    obj.SetPosition(new Vector3(topleft.X + (y + 0.5f) * elemSize, topleft.Y, topleft.Z + (x + 0.5f) * elemSize));
+                    map.AddEnemy((SimpleCharacter)obj);
                 }
             }
 
@@ -150,6 +233,7 @@ namespace FPSGame.Factory
         private String missionDes;
         private int width;
         private int height;
+        private ArrayList enemies;
 
         public int GetWidth()
         {
@@ -183,6 +267,7 @@ namespace FPSGame.Factory
                 }
             }
             objects = new ArrayList();
+            enemies = new ArrayList();
         }
 
         public String GetName()
@@ -217,6 +302,22 @@ namespace FPSGame.Factory
                 if (obj == null) continue;
                 obj.Begin();
             }
+
+            foreach (IDisplayObject obj in enemies)
+            {
+                if (obj == null) continue;
+                obj.Begin();
+            }
+        }
+
+        public SimpleCharacter[] GetEnemies()
+        {
+            return (SimpleCharacter[])enemies.ToArray(typeof(SimpleCharacter));
+        }
+
+        public void AddEnemy(SimpleCharacter enemy)
+        {
+            enemies.Add(enemy);
         }
 
         public IDisplayObject[][] GetMatrix()
@@ -231,7 +332,7 @@ namespace FPSGame.Factory
 
         public IDisplayObject[] GetObjects()
         {
-            return (IDisplayObject[])objects.ToArray();
+            return (IDisplayObject[])objects.ToArray(typeof(IDisplayObject));
         }
 
         public void AddObject(IDisplayObject obj)
@@ -263,6 +364,13 @@ namespace FPSGame.Factory
                 obj.End();
             }
             objects = null;
+
+            foreach (IDisplayObject obj in enemies)
+            {
+                if (obj == null) continue;
+                obj.End();
+            }
+            enemies = null;
         }
     }
 }

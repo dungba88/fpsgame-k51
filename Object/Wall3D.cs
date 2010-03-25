@@ -10,7 +10,7 @@ using FPSGame.Factory;
 
 namespace FPSGame.Object
 {
-    public class Wall3D : IDisplayObject, Collidable, IBoxShaped
+    public class Wall3D : IDisplayObject3D, Collidable, IBoxShaped
     {
         private Vector3 pos;
         private Vector3 up;

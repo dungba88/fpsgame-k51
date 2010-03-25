@@ -14,7 +14,7 @@ namespace FPSGame.Object
         public const int MIN_SHOCK = 5;
         public const int MAX_SHOCK = 20;    //crosshair shock
         public const int MAX_LATENCY = 2;    //crosshair shock
-        public const float MAX_GUN_SHOCK = 20;     //gun shock
+        public const float MAX_GUN_SHOCK = 40;     //gun shock
         public const float MAX_GUN_SHOCK_RADIUS = 2;
         public const int MAX_GUNFIRE_LATENCY = 3;
 
