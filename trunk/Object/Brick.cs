@@ -192,7 +192,7 @@ namespace FPSGame.Object
         protected virtual void BuildWalls()
         {
             if (symbol == "*") return;
-            
+
             if (walls[0] == null)
             {
                 if (CheckWestSide())

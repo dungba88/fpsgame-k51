@@ -30,7 +30,7 @@ namespace FPSGame.Engine.GameState
             FPSGame.GetInstance().HideMouse();
             PlayerCharacter character = FPSGame.GetInstance().GetPlayer().CreatePlayer();
             FPSGame.GetInstance().GetFPSCamera().ApplyToPlayer(character);
-            EffectUtils.PlaySound(ResourceManager.OPERA_THEME_SONG, true);
+            //EffectUtils.PlaySound(ResourceManager.OPERA_THEME_SONG, true);
         }
 
         public override void OnDraw(GameTime gameTime)
@@ -100,6 +100,8 @@ namespace FPSGame.Engine.GameState
             if (ms.LeftButton == ButtonState.Pressed)
             {
                 FPSGame.GetInstance().GetPlayer().GetCharacter().Shoot();
+                //check for intersection
+                UpdatePicking();
             }
             else
             {
@@ -124,6 +126,45 @@ namespace FPSGame.Engine.GameState
         {
             FPSGame.GetInstance().ShowMouse();
             EffectUtils.StopSound(ResourceManager.OPERA_THEME_SONG);
+        }
+
+        public void UpdatePicking()
+        {
+            SimpleCharacter[] models = MapLoader.GetInstance().GetMap().GetEnemies();
+            FirstPersonCamera cam = FPSGame.GetInstance().GetFPSCamera();
+            SimpleCharacter picked = null;
+            for (int i = 0; i < models.Length; i++)
+            {
+                bool insideBoundingSphere;
+                Vector3 vertex1, vertex2, vertex3;
+
+                float closestIntersection = float.MaxValue;
+
+                Ray cursorRay = RayCollisionDetector.CalculateCursorRay(cam.GetProjection(), cam.GetView());
+
+                // Perform the ray to model intersection test.
+                float? intersection = RayCollisionDetector.RayIntersectsBox(cursorRay, models[i].GetBoundingBox(),
+                                                         models[i].GetWorld(),
+                                                         out insideBoundingSphere);
+
+                // Do we have a per-triangle intersection with this model?
+                if (intersection != null)
+                {
+                    // If so, is it closer than any other model we might have
+                    // previously intersected?
+                    if (intersection < closestIntersection)
+                    {
+                        // Store information about this model.
+                        closestIntersection = intersection.Value;
+                        picked = models[i];
+                    }
+                }
+            }
+
+            if (picked != null)
+            {
+                FPSGame.GetInstance().SetInfo("has picked");
+            }
         }
     }
 }

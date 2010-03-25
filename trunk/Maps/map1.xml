@@ -36,6 +36,71 @@
 		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 * * 0 0 0 0</matrixRow>
 		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow>
 	</content>
+	<enemies>
+		<enemy>
+			<position>8 2</position>
+			<file-name>PlayerMarine</file-name>
+			<initial-state>guard</initial-state>
+		</enemy>
+		<enemy>
+			<position>8 9</position>
+			<file-name>PlayerMarine</file-name>
+			<initial-state>idle</initial-state>
+		</enemy>
+		<enemy>
+			<position>8 9</position>
+			<name>private</name>
+			<file-name>PlayerMarine</file-name>
+			<initial-state>idle</initial-state>
+		</enemy>
+		<enemy>
+			<position>6 21</position>
+			<name>private</name>
+			<file-name>PlayerMarine</file-name>
+			<initial-state>patrol</initial-state>
+			<patrol-to>0 21</patrol-to>
+		</enemy>
+		<enemy>
+			<position>4 11</position>
+			<name>private</name>
+			<file-name>PlayerMarine</file-name>
+			<initial-state>patrol</initial-state>
+			<patrol-to>4 17</patrol-to>
+		</enemy>
+		<enemy>
+			<position>11 10</position>
+			<name>private</name>
+			<file-name>PlayerMarine</file-name>
+			<initial-state>idle</initial-state>
+		</enemy>
+		<enemy>
+			<position>16 14</position>
+			<name>private</name>
+			<file-name>PlayerMarine</file-name>
+			<initial-state>patrol</initial-state>
+			<patrol-to>16 21</patrol-to>
+		</enemy>
+	</enemies>
+	<models>
+		<model>
+			<name>wardrobe</name>
+			<file-name>wardrobe</file-name>
+			<position>4 9</position>
+			<scale>1</scale>
+		</model>
+		<model>
+			<name>wardrobe</name>
+			<file-name>wardrobe</file-name>
+			<position>11 21</position>
+			<scale>1</scale>
+		</model>
+		<model>
+			<name>wardrobe</name>
+			<file-name>wardrobe</file-name>
+			<position>13 21</position>
+			<scale>1</scale>
+		</model>
+	</models>
 </map-2d>
 
 <!--

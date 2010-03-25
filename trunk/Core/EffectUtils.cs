@@ -20,7 +20,7 @@ namespace FPSGame.Core
         {
             SoundEffect snd = ResourceManager.GetResource<SoundEffect>(sound);
             if (snd != null)
-                snd.Play(1.0f, 0.0f, 0.0f, loop);
+                snd.Play(1.0f, 0.0f, 0.0f);
         }
 
         public static void StopSound(String sound)

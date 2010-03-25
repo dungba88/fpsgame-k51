@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing.Drawing2D;
+using FPSGame.Object;
 
 namespace FPSGame.Core
 {
@@ -11,6 +12,10 @@ namespace FPSGame.Core
         void OnLoad();
 
         void OnUnload();
+
+        void AddEnemy(SimpleCharacter enemy);
+
+        SimpleCharacter[] GetEnemies();
 
         void AddConstantObject(IDisplayObject obj, int x, int y);
 
