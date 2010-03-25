@@ -15,6 +15,7 @@ using FPSGame.Engine.GameState;
 using FPSGame.Object;
 using FPSGame.Factory;
 using FPSGame.Core;
+using XNAnimation;
 
 namespace FPSGame
 {
@@ -38,6 +39,8 @@ namespace FPSGame
         private Player player;
         private bool isUpdating;
         private bool shouldEnd;
+        private String info = "";
+        SimpleCharacter enemy;
 
         public static FPSGame GetInstance()
         {
@@ -51,7 +54,7 @@ namespace FPSGame
             graphics.PreferredBackBufferHeight = HEIGHT;
             graphics.IsFullScreen = FULLSCREEN_ENABLED;
             Content.RootDirectory = "Content";
-            fpsCamera = new FirstPersonCamera(this, new Vector3(3, 2, 50), new Vector3(3, 2, 10), Vector3.Up);
+            fpsCamera = new FirstPersonCamera(this, new Vector3(3, 2, 40), new Vector3(3, 2, 10), Vector3.Up);
             Components.Add(fpsCamera);
             player = new Player();
 
@@ -111,15 +114,35 @@ namespace FPSGame
             ResourceManager.RegisterResource(ResourceManager.FONT, Content.Load<SpriteFont>("Times New Roman"));
             ResourceManager.RegisterResource(ResourceManager.PLAYER_GUN_SND, Content.Load<SoundEffect>(@"Sounds/Gun 5"));
             ResourceManager.RegisterResource(ResourceManager.OPERA_THEME_SONG, Content.Load<SoundEffect>(@"Sounds/opera"));
+            ResourceManager.RegisterResource(ResourceManager.TERRORIST, Content.Load<SkinnedModel>(@"Models/PlayerMarine"));
+            //ResourceManager.RegisterResource(ResourceManager.TERRORIST_WEAPON, Content.Load<Model>(@"Models/colt-xm177"));
 
-            //brick = new Brick(Vector3.Zero, Vector3.Forward, Vector3.Up, 0.125f, ResourceManager.GetResource<Texture2D>(ResourceManager.FLOOR_TEXTURE));
-            //brick.Begin();
-            //brick1 = new Brick(new Vector3(0.25f, 0, 0.125f), Vector3.Forward, Vector3.Up, 0.125f, ResourceManager.GetResource<Texture2D>(ResourceManager.FLOOR_TEXTURE));
-            //brick1.Begin();
-
-            //MapLoader.GetInstance().BuildMap("Maps/map1.xml");
+            //enemy = new SimpleCharacter(ResourceManager.GetResource<SkinnedModel>(ResourceManager.TERRORIST), 0.1f, new Vector3(0, -2, 0), null, 10);
+            //enemy.AttachWeapon(ResourceManager.GetResource<Model>(ResourceManager.TERRORIST_WEAPON));
+            //enemy.SetPosition(fpsCamera.GetPosition());
+            //Vector3 fixPos = new Vector3(3, -2.8f, 60);
+            //enemy.scale = 1;
+            //enemy.fixPos = fixPos;
+            //enemy.fixRotX = -3.24f;
+            //enemy.fixRotY = 0;
+            //enemy.fixRotZ = MathHelper.PiOver4;
+            //enemy.Begin();
 
             SetGameState(new MainMenuState());
+        }
+
+        public void DrawInformation(String info)
+        {
+            DrawString(info, new Vector2(10, 10), Color.Aqua);
+        }
+
+        public T LoadModel<T>(String model, String id)
+        {
+            if (!ResourceManager.IsResourceRegistered(id))
+            {
+                ResourceManager.RegisterResource(id, Content.Load<T>(@"Models/" + model));
+            }
+            return ResourceManager.GetResource<T>(id);
         }
 
         /// <summary>
@@ -147,7 +170,6 @@ namespace FPSGame
             if (currentState != null)
             {
                 currentState.Update(gameTime);
-                //ObjectManager.GetInstance().Update(gameTime);
             }
             base.Update(gameTime);
             isUpdating = false;
@@ -165,7 +187,8 @@ namespace FPSGame
             spriteBatch.Begin();
             if (currentState != null)
             {
-                currentState.Draw(gameTime);   
+                currentState.Draw(gameTime);
+                DrawInformation(info);
 
                 //reset render state for 3D drawing
                 FPSGame.GetInstance().GraphicsDevice.RenderState.DepthBufferEnable = true;
@@ -177,6 +200,11 @@ namespace FPSGame
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void SetInfo(String s)
+        {
+            info = s;
         }
 
         public void SetGameState(IGameState state)
