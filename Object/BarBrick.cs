@@ -30,7 +30,7 @@ namespace FPSGame.Object
                 Wall3D wall = GetWalls()[i];
                 if (wall == null)
                 {
-                    CreateDoubleSideWall(i, ResourceManager.GetResource<Texture2D>(ResourceManager.JAIL_BARS));
+//                    CreateDoubleSideWall(i, ResourceManager.GetResource<Texture2D>(ResourceManager.JAIL_BARS));
                     return;
                 }
             }

@@ -29,9 +29,9 @@ namespace FPSGame.Engine
             return instance;
         }
 
-        public ArrayList GetObjects()
+        public IDisplayObject[] GetObjects()
         {
-            return objects;
+            return (IDisplayObject[])objects.ToArray(typeof(IDisplayObject));
         }
 
         public void CleanUp()
@@ -106,9 +106,10 @@ namespace FPSGame.Engine
 
         public void NotifyAllObservers(IGameEvent evt)
         {
-            foreach (IObserver obj in objects)
+            foreach (IDisplayObject obj in objects)
             {
-                obj.Notify(evt);
+                if (obj is IObserver)
+                    ((IObserver)obj).Notify(evt);
             }
         }
     }

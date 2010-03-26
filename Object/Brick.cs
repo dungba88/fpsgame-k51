@@ -142,16 +142,18 @@ namespace FPSGame.Object
             return false;
         }
 
-        public Wall3D CreateWall(float x, float baseY, float z, Vector3 normal, Texture2D texture)
-        {
-            float wallHeight = width * 1.2f;
-            return (Wall3D)TerrainFactory.CreateWall(x, baseY + wallHeight / 2, z, width, wallHeight, normal, texture);
-        }
+        //public Wall3D CreateWall(float x, float baseY, float z, Vector3 normal, Texture2D texture)
+        //{
+        //    float wallHeight = width * 1.2f;
+        //    return (Wall3D)TerrainFactory.CreateWall(x, baseY + wallHeight / 2, z, width, wallHeight, normal, texture);
+        //}
 
         public Wall3D CreateWall(float x, float baseY, float z, Vector3 normal)
         {
             float wallHeight = width * 1.2f;
-            return (Wall3D)TerrainFactory.CreateWall(x, baseY + wallHeight / 2, z, width, wallHeight, normal);
+            Wall3D wall = (Wall3D)TerrainFactory.CreateWall(x, baseY + wallHeight / 2, z, width, wallHeight, normal);
+            wall.SetBrick(this);
+            return wall;
         }
 
         public Wall3D CreateWall(int i)
@@ -164,30 +166,30 @@ namespace FPSGame.Object
             return null;
         }
 
-        public void CreateDoubleSideWall(int i, Texture2D texture)
-        {
-            Vector3 pos = GetPosition();
-            if (i == 0)
-            {
-                CreateWall(pos.X - width / 2, pos.Y, pos.Z, new Vector3(1, 0, 0), texture).Begin();
-                CreateWall(pos.X - width / 2, pos.Y, pos.Z, new Vector3(-1, 0, 0), texture).Begin();
-            }
-            if (i == 1)
-            {
-                CreateWall(pos.X + width / 2, pos.Y, pos.Z, new Vector3(-1, 0, 0), texture).Begin();
-                CreateWall(pos.X + width / 2, pos.Y, pos.Z, new Vector3(1, 0, 0), texture).Begin();
-            }
-            if (i == 2)
-            {
-                CreateWall(pos.X, pos.Y, pos.Z - height / 2, new Vector3(0, 0, 1), texture).Begin();
-                CreateWall(pos.X, pos.Y, pos.Z - height / 2, new Vector3(0, 0, -1), texture).Begin();
-            }
-            if (i == 3)
-            {
-                CreateWall(pos.X, pos.Y, pos.Z + height / 2, new Vector3(0, 0, -1)).Begin();
-                CreateWall(pos.X, pos.Y, pos.Z + height / 2, new Vector3(0, 0, 2)).Begin();
-            }
-        }
+        //public void CreateDoubleSideWall(int i, Texture2D texture)
+        //{
+        //    Vector3 pos = GetPosition();
+        //    if (i == 0)
+        //    {
+        //        CreateWall(pos.X - width / 2, pos.Y, pos.Z, new Vector3(1, 0, 0), texture).Begin();
+        //        CreateWall(pos.X - width / 2, pos.Y, pos.Z, new Vector3(-1, 0, 0), texture).Begin();
+        //    }
+        //    if (i == 1)
+        //    {
+        //        CreateWall(pos.X + width / 2, pos.Y, pos.Z, new Vector3(-1, 0, 0), texture).Begin();
+        //        CreateWall(pos.X + width / 2, pos.Y, pos.Z, new Vector3(1, 0, 0), texture).Begin();
+        //    }
+        //    if (i == 2)
+        //    {
+        //        CreateWall(pos.X, pos.Y, pos.Z - height / 2, new Vector3(0, 0, 1), texture).Begin();
+        //        CreateWall(pos.X, pos.Y, pos.Z - height / 2, new Vector3(0, 0, -1), texture).Begin();
+        //    }
+        //    if (i == 3)
+        //    {
+        //        CreateWall(pos.X, pos.Y, pos.Z + height / 2, new Vector3(0, 0, -1)).Begin();
+        //        CreateWall(pos.X, pos.Y, pos.Z + height / 2, new Vector3(0, 0, 2)).Begin();
+        //    }
+        //}
 
         protected virtual void BuildWalls()
         {

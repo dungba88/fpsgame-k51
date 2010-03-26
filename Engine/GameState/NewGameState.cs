@@ -130,33 +130,25 @@ namespace FPSGame.Engine.GameState
 
         public void UpdatePicking()
         {
-            SimpleCharacter[] models = MapLoader.GetInstance().GetMap().GetEnemies();
+            IDisplayObject[] objects = MapLoader.GetInstance().GetMap().GetFullMap();
             FirstPersonCamera cam = FPSGame.GetInstance().GetFPSCamera();
             SimpleCharacter picked = null;
-            for (int i = 0; i < models.Length; i++)
+            float closestIntersection = float.MaxValue;
+            float? intersection;
+            Ray cursorRay = RayCollisionDetector.CalculateCursorRay(cam.GetProjection(), cam.GetView());
+            for (int i = 0; i < objects.Length; i++)
             {
-                bool insideBoundingSphere;
-                Vector3 vertex1, vertex2, vertex3;
-
-                float closestIntersection = float.MaxValue;
-
-                Ray cursorRay = RayCollisionDetector.CalculateCursorRay(cam.GetProjection(), cam.GetView());
-
-                // Perform the ray to model intersection test.
-                float? intersection = RayCollisionDetector.RayIntersectsBox(cursorRay, models[i].GetBoundingBox(),
-                                                         models[i].GetWorld(),
-                                                         out insideBoundingSphere);
-
-                // Do we have a per-triangle intersection with this model?
-                if (intersection != null)
+                IDisplayObject obj = objects[i];
+                if (obj is Collidable)
                 {
-                    // If so, is it closer than any other model we might have
-                    // previously intersected?
-                    if (intersection < closestIntersection)
+                    intersection = ((Collidable)obj).CollideWith(cursorRay);
+                    if (intersection.Value < closestIntersection)
                     {
-                        // Store information about this model.
                         closestIntersection = intersection.Value;
-                        picked = models[i];
+                        if (obj is SimpleCharacter)
+                            picked = (SimpleCharacter)obj;
+                        else
+                            picked = null;
                     }
                 }
             }

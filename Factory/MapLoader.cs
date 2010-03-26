@@ -124,8 +124,8 @@ namespace FPSGame.Factory
                                 break;
                             case "0":
                                 index = new Vector2(i, j);
-                                //obj = TerrainFactory.CreateBrick(topleft.X + (i + 0.5f) * elemSize, topleft.Y, topleft.Z + (j + 0.5f) * elemSize, elemSize, index, data);
-                                //map.AddConstantObject(obj, i, j);
+                                obj = TerrainFactory.CreateBrick(topleft.X + (i + 0.5f) * elemSize, topleft.Y, topleft.Z + (j + 0.5f) * elemSize, elemSize, index, data);
+                                map.AddConstantObject(obj, i, j);
                                 break;
                             default:
                                 break;
@@ -171,10 +171,13 @@ namespace FPSGame.Factory
                         }
                     }
 
-                    obj = TerrainFactory.CreateModel(mname, file, topleft.X + (x) * elemSize, topleft.Y, topleft.Z - (y) * elemSize, scale, new Vector3(3f, 0, -4), 1000);
+                    obj = TerrainFactory.CreateModel(mname, file, topleft.X + (x) * elemSize, topleft.Y, topleft.Z - (y) * elemSize, scale, new Vector3(3f, 0, -4), Vector3.Zero, 1000);
                     map.AddObject(obj);
                 }
             }
+
+            //obj = TerrainFactory.CreateModel(ResourceManager.TERRORIST_WEAPON, "colt-xm177", topleft.X + 14, topleft.Y, 50, 0.005f, new Vector3(0, 0, 0), 1);
+            //map.AddObject(obj);
 
             //load enemy
             nodes = xml.GetElementsByTagName("enemies");
@@ -189,6 +192,7 @@ namespace FPSGame.Factory
                     String file = "";
                     int x = 0;
                     int y = 0;
+                    float rot = 0;
                     IEnumerator enum1 = node.ChildNodes.GetEnumerator();
                     while (enum1.MoveNext())
                     {
@@ -205,12 +209,34 @@ namespace FPSGame.Factory
                             x = int.Parse(s[0]);
                             y = int.Parse(s[1]);
                         }
+                        else if (child.Name == "initial-rotation")
+                        {
+                            rot = float.Parse(child.InnerText);
+                        }
                     }
 
                     SkinnedModel m = FPSGame.GetInstance().LoadModel<SkinnedModel>(file, mname);
-                    obj = new SimpleCharacter(m, 0.35f, Vector3.Zero, null, 2.8f);
-                    obj.SetPosition(new Vector3(topleft.X + (y + 0.5f) * elemSize, topleft.Y, topleft.Z + (x + 0.5f) * elemSize));
-                    map.AddEnemy((SimpleCharacter)obj);
+                    Model wpnModel = ResourceManager.GetResource<Model>(ResourceManager.TERRORIST_WEAPON);
+                    IDictionary<String, Vector3> animFixRot = new Dictionary<String, Vector3>();
+                    IDictionary<String, Vector3> animFixPos = new Dictionary<String, Vector3>();
+                    //animFixPos.Add("Idle", new Vector3(0.3f, -0.05f, 0.2f));
+                    //animFixPos.Add("Shoot", new Vector3(0.15f, +0.05f, 0.55f));
+                    //animFixPos.Add("Run", new Vector3(0.35f, +0.05f, 0.15f));
+                    //animFixRot.Add("Idle", new Vector3(0, (float)Math.PI * 0.55f, -(float)Math.PI * 0.15f));
+                    //animFixRot.Add("Shoot", new Vector3(-(float)Math.PI * 0.25f, (float)Math.PI * 0.16f, -(float)Math.PI * 0.55f));
+                    //animFixRot.Add("Run", new Vector3(-(float)Math.PI * 0f, (float)Math.PI * 0.56f, -(float)Math.PI * 0f));
+                    animFixPos.Add("Idle", new Vector3(-0.3f, -0.1f, -0.2f));
+                    animFixPos.Add("Shoot", Vector3.Zero);
+                    animFixPos.Add("Run", Vector3.Zero);
+                    animFixRot.Add("Idle", new Vector3((float)Math.PI*0.0f, -(float)Math.PI * 0.1f, -(float)Math.PI * 0.35f));
+                    animFixRot.Add("Shoot", new Vector3(0, -(float)Math.PI * 0.11f, -(float)Math.PI * 0.38f));
+                    animFixRot.Add("Run", new Vector3(0, -(float)Math.PI * 0.11f, -(float)Math.PI * 0.38f));
+                    SimpleObject3D weapon = new SimpleObject3D(wpnModel, 0.005f, 1);
+                    SimpleCharacter enemy = new SimpleCharacter(m, 0.35f, Vector3.Zero, animFixPos, animFixRot, null, 2.8f);
+                    enemy.SetPosition(new Vector3(topleft.X + (y + 0.5f) * elemSize, topleft.Y, topleft.Z + (x + 0.5f) * elemSize));
+                    enemy.SetRotation(new Vector3(0, (float)Math.PI/180*rot, 0));
+                    enemy.AttachObject(weapon, "R_Hand2");
+                    map.AddEnemy((SimpleCharacter)enemy);
                 }
             }
 
@@ -243,6 +269,30 @@ namespace FPSGame.Factory
         public int GetHeight()
         {
             return height;
+        }
+
+        public IDisplayObject[] GetFullMap()
+        {
+            //initialize full map with maximum value
+            ArrayList full = new ArrayList();
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                for (int j = 0; j < matrix.Length; j++)
+                {
+                    IDisplayObject obj = matrix[i][j];
+                    if (obj != null)
+                        full.Add(obj);
+                }
+            }
+            foreach(IDisplayObject obj in objects)
+            {
+                full.Add(obj);
+            }
+            foreach (IDisplayObject obj in enemies)
+            {
+                full.Add(obj);
+            }
+            return (IDisplayObject[])full.ToArray(typeof(IDisplayObject));
         }
 
         public DefaultMap(Vector2 size, String name, String des, String missionDes)

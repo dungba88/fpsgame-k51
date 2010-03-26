@@ -11,5 +11,7 @@ namespace FPSGame.Core
         bool CollideWith(IBoxShaped obj);
 
         bool CollideWith(ISphereShaped obj);
+
+        float? CollideWith(Ray ray);
     }
 }

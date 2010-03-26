@@ -224,7 +224,7 @@ namespace FPSGame.Engine
             return new Ray(nearPoint, direction);
         }
 
-        public static float? RayIntersectsBox(Ray ray, BoundingBox box, Matrix modelTransform,
+        public static float? RayIntersectsModel(Ray ray, BoundingBox box, Matrix modelTransform,
                                          out bool insideBoundingSphere)
         {
             Matrix inverseTransform = Matrix.Invert(modelTransform);
@@ -238,6 +238,116 @@ namespace FPSGame.Engine
             else
                 insideBoundingSphere = true;
             return intersect;
+        }
+
+                /// <summary>
+        /// This helper function checks to see if a ray will intersect with a model.
+        /// The model's bounding spheres are used, and the model is transformed using
+        /// the matrix specified in the worldTransform argument.
+        /// </summary>
+        /// <param name="ray">the ray to perform the intersection check with</param>
+        /// <param name="model">the model to perform the intersection check with.
+        /// the model's bounding spheres will be used.</param>
+        /// <param name="worldTransform">a matrix that positions the model
+        /// in world space</param>
+        /// <param name="absoluteBoneTransforms">this array of matrices contains the
+        /// absolute bone transforms for the model. this can be obtained using the
+        /// Model.CopyAbsoluteBoneTransformsTo function.</param>
+        /// <returns>the intersection between the ray and model.</returns>
+        public static float RayIntersectsModel(Ray ray, Model model,
+            Matrix worldTransform, Matrix[] absoluteBoneTransforms)
+        {
+            float closetIntersection = float.MaxValue;
+            // Each ModelMesh in a Model has a bounding sphere, so to check for an
+            // intersection in the Model, we have to check every mesh.
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                // the mesh's BoundingSphere is stored relative to the mesh itself.
+                // (Mesh space). We want to get this BoundingSphere in terms of world
+                // coordinates. To do this, we calculate a matrix that will transform
+                // from coordinates from mesh space into world space....
+                Matrix world =
+                    absoluteBoneTransforms[mesh.ParentBone.Index] * worldTransform;
+
+                // ... and then transform the BoundingSphere using that matrix.
+                BoundingSphere sphere = 
+                    TransformBoundingSphere(mesh.BoundingSphere, world);
+
+                // now that the we have a sphere in world coordinates, we can just use
+                // the BoundingSphere class's Intersects function. Intersects returns a
+                // nullable float (float?). This value is the distance at which the ray
+                // intersects the BoundingSphere, or null if there is no intersection.
+                // so, if the value is not null, we have a collision.
+                float? f = sphere.Intersects(ray);
+                if (f != null)
+                {
+                    if (closetIntersection > f.Value)
+                        closetIntersection = f.Value;
+                }
+            }
+
+            return closetIntersection;
+        }
+
+        public static float RayIntersectsObject(Ray ray, BoundingSphere boundingSphere)
+        {
+            float closetIntersection = float.MaxValue;
+            float? intersection = boundingSphere.Intersects(ray);
+            if (intersection != null)
+                return intersection.Value;
+            return closetIntersection;
+        }
+
+        public static float RayIntersectsObject(Ray ray, BoundingBox boundingBox)
+        {
+            float closetIntersection = float.MaxValue;
+            float? intersection = boundingBox.Intersects(ray);
+            if (intersection != null)
+                return intersection.Value;
+            return closetIntersection;
+        }
+
+        /// <summary>
+        /// This helper function takes a BoundingSphere and a transform matrix, and
+        /// returns a transformed version of that BoundingSphere.
+        /// </summary>
+        /// <param name="sphere">the BoundingSphere to transform</param>
+        /// <param name="world">how to transform the BoundingSphere.</param>
+        /// <returns>the transformed BoundingSphere/</returns>
+        public static BoundingSphere TransformBoundingSphere(BoundingSphere sphere,
+            Matrix transform)
+        {
+            BoundingSphere transformedSphere;
+
+            // the transform can contain different scales on the x, y, and z components.
+            // this has the effect of stretching and squishing our bounding sphere along
+            // different axes. Obviously, this is no good: a bounding sphere has to be a
+            // SPHERE. so, the transformed sphere's radius must be the maximum of the 
+            // scaled x, y, and z radii.
+
+            // to calculate how the transform matrix will affect the x, y, and z
+            // components of the sphere, we'll create a vector3 with x y and z equal
+            // to the sphere's radius...
+            Vector3 scale3 = new Vector3(sphere.Radius, sphere.Radius, sphere.Radius);
+
+            // then transform that vector using the transform matrix. we use
+            // TransformNormal because we don't want to take translation into account.
+            scale3 = Vector3.TransformNormal(scale3, transform);
+
+            // scale3 contains the x, y, and z radii of a squished and stretched sphere.
+            // we'll set the finished sphere's radius to the maximum of the x y and z
+            // radii, creating a sphere that is large enough to contain the original 
+            // squished sphere.
+            transformedSphere.Radius = Math.Max(scale3.X, Math.Max(scale3.Y, scale3.Z));
+
+            // transforming the center of the sphere is much easier. we can just use 
+            // Vector3.Transform to transform the center vector. notice that we're using
+            // Transform instead of TransformNormal because in this case we DO want to 
+            // take translation into account.
+            transformedSphere.Center = Vector3.Transform(sphere.Center, transform);
+
+
+            return transformedSphere;
         }
     }
 }
