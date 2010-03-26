@@ -18,6 +18,7 @@ namespace FPSGame.Object
         private bool running;
         private float delta;
         private int sign;
+        private FirstPersonCamera cam;
 
         public PlayerCharacter()
         {
@@ -36,6 +37,7 @@ namespace FPSGame.Object
 
         public void Update(GameTime gameTime)
         {
+            cam = FPSGame.GetInstance().GetFPSCamera();
             if (HP < 0) End();
             gun.Update(gameTime);
         }

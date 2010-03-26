@@ -19,6 +19,7 @@ namespace FPSGame.Engine
     /// </summary>
     public class Camera : Microsoft.Xna.Framework.GameComponent, ICamera
     {
+        public const float HEIGHT = 3;
         protected Matrix view;
         protected Matrix projection;
         protected Vector3 pos;
@@ -87,7 +88,7 @@ namespace FPSGame.Engine
         {
         }
 
-        public void Update()
+        public virtual void Update()
         {
             view = Matrix.CreateLookAt(pos, pos+dir, up);
         }
@@ -101,7 +102,7 @@ namespace FPSGame.Engine
             return false;
         }
 
-        public void SetPosition(Vector3 pos)
+        public virtual void SetPosition(Vector3 pos)
         {
             this.pos = pos;
         }
@@ -111,7 +112,7 @@ namespace FPSGame.Engine
             return pos;
         }
 
-        public void SetDirection(Vector3 dir)
+        public virtual void SetDirection(Vector3 dir)
         {
             this.dir = dir;
         }

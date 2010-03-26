@@ -40,6 +40,7 @@ namespace FPSGame
         private bool isUpdating;
         private bool shouldEnd;
         private String info = "";
+        private String infoapp = "";
         SimpleCharacter enemy;
 
         public static FPSGame GetInstance()
@@ -54,7 +55,7 @@ namespace FPSGame
             graphics.PreferredBackBufferHeight = HEIGHT;
             graphics.IsFullScreen = FULLSCREEN_ENABLED;
             Content.RootDirectory = "Content";
-            fpsCamera = new FirstPersonCamera(this, new Vector3(3, 2, 40), new Vector3(3, 2, 10), Vector3.Up);
+            fpsCamera = new FirstPersonCamera(this, new Vector3(3, Camera.HEIGHT, 40), new Vector3(3, Camera.HEIGHT, 10), Vector3.Up);
             Components.Add(fpsCamera);
             player = new Player();
 
@@ -115,7 +116,7 @@ namespace FPSGame
             ResourceManager.RegisterResource(ResourceManager.PLAYER_GUN_SND, Content.Load<SoundEffect>(@"Sounds/Gun 5"));
             ResourceManager.RegisterResource(ResourceManager.OPERA_THEME_SONG, Content.Load<SoundEffect>(@"Sounds/opera"));
             ResourceManager.RegisterResource(ResourceManager.TERRORIST, Content.Load<SkinnedModel>(@"Models/PlayerMarine"));
-            //ResourceManager.RegisterResource(ResourceManager.TERRORIST_WEAPON, Content.Load<Model>(@"Models/colt-xm177"));
+            ResourceManager.RegisterResource(ResourceManager.TERRORIST_WEAPON, Content.Load<Model>(@"Models/colt-xm177"));
 
             //enemy = new SimpleCharacter(ResourceManager.GetResource<SkinnedModel>(ResourceManager.TERRORIST), 0.1f, new Vector3(0, -2, 0), null, 10);
             //enemy.AttachWeapon(ResourceManager.GetResource<Model>(ResourceManager.TERRORIST_WEAPON));
@@ -188,7 +189,7 @@ namespace FPSGame
             if (currentState != null)
             {
                 currentState.Draw(gameTime);
-                DrawInformation(info);
+                DrawInformation(info + infoapp);
 
                 //reset render state for 3D drawing
                 FPSGame.GetInstance().GraphicsDevice.RenderState.DepthBufferEnable = true;
@@ -202,9 +203,24 @@ namespace FPSGame
             base.Draw(gameTime);
         }
 
+        public void DrawLine3D(Vector3 src, Vector3 dst)
+        { 
+            Vector3 srcprj = GraphicsDevice.Viewport.Project(src, fpsCamera.GetProjection(), fpsCamera.GetView(), Matrix.Identity);
+            Vector3 dstprj = GraphicsDevice.Viewport.Project(dst, fpsCamera.GetProjection(), fpsCamera.GetView(), Matrix.Identity);
+            Line line = new Line(new Color[] { Color.Aqua });
+            //DrawString("srcprj: " + srcprj.X + "/" + srcprj.Y + " dstprj: " + dstprj.X + "/" + dstprj.Y, new Vector2(10, 25), Color.Red);
+            line.Render(new Vector2(srcprj.X, srcprj.Y), new Vector2(dstprj.X, dstprj.Y), Color.Red, 0);
+            //line.Render(new Vector2(0, 0), new Vector2(400, 400), Color.Red, 0);
+        }
+
         public void SetInfo(String s)
         {
             info = s;
+        }
+
+        public void AppendInfo(String s)
+        {
+            infoapp = s;
         }
 
         public void SetGameState(IGameState state)

@@ -50,5 +50,50 @@ namespace FPSGame.Core
             if (value > max) return max;
             return value;
         }
+
+        public static float GetAngleBetweenPoint(Vector3 src, Vector3 dst)
+        {
+            return GetAngleFromVector(GetDiff(src, dst));
+        }
+
+        public static float GetAngleFromVector(Vector3 diff)
+        {
+            return (float)Math.Atan2(diff.Z, diff.X);
+        }
+
+        public static Vector3 GetDiff(Vector3 src, Vector3 dst)
+        {
+            return new Vector3(dst.Z - src.Z, 0, dst.X - src.X);
+        }
+
+        public static bool IsInRange(Vector3 src, Vector3 dst, Vector3 check)
+        {
+            float xmax = Math.Max(src.X, dst.X);
+            float zmax = Math.Max(src.Z, dst.Z);
+            float xmin = Math.Min(src.X, dst.X);
+            float zmin = Math.Min(src.Z, dst.Z);
+            if (check.X < xmin || check.X > xmax) return false;
+            if (check.Z < zmin || check.Z > zmax) return false;
+            return true;
+        }
+
+        public static float GetDistance(Vector3 src, Vector3 dst)
+        {
+            return (float)Math.Sqrt((dst.X - src.X) * (dst.X - src.X) + (dst.Z - src.Z) * (dst.Z - src.Z));
+        }
+
+        public static bool IsBound(float min, float max, float angle)
+        {
+            if (Math.Abs(min) > Math.PI * 2)
+                min = min % ((float)Math.PI * 2);
+            if (Math.Abs(max) > Math.PI * 2)
+                max = max % ((float)Math.PI * 2);
+
+            if (min < 0) min += (float)Math.PI * 2;
+            if (max < 0) max += (float)Math.PI * 2;
+            if (angle < min || angle > max)
+                return false;
+            return true;
+        }
     }
 }

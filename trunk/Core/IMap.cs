@@ -27,6 +27,8 @@ namespace FPSGame.Core
 
         IDisplayObject[] GetObjects();
 
+        IDisplayObject[] GetFullMap();
+
         String GetName();
 
         String GetDescription();

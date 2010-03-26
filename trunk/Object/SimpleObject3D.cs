@@ -18,22 +18,25 @@ namespace FPSGame.Object
         private bool dead;
         private float scale;
         private Vector3 fixPos;
+        private Vector3 fixRot;
         private float posMultiplicity;
+        private Matrix quat;
 
         public SimpleObject3D(Model model, float scale, float posMultiplicity)
         {
             //initialize properties
-            init(model, scale, Vector3.Zero, posMultiplicity);
+            init(model, scale, Vector3.Zero, Vector3.Zero, posMultiplicity);
         }
 
-        public SimpleObject3D(Model model, float scale, Vector3 fixPos, float posMultiplicity)
+        public SimpleObject3D(Model model, float scale, Vector3 fixPos, Vector3 fixRot, float posMultiplicity)
         {
             //initialize properties
-            init(model, scale, fixPos, posMultiplicity);
+            init(model, scale, fixPos, fixRot, posMultiplicity);
         }
 
-        private void init(Model model, float scale, Vector3 fixPos, float posMultiplicity)
+        private void init(Model model, float scale, Vector3 fixPos, Vector3 fixRot, float posMultiplicity)
         {
+            this.quat = Matrix.CreateFromQuaternion(Quaternion.Identity);
             this.model = model;
             this.posMultiplicity = posMultiplicity;
             this.world = Matrix.Identity * scale;
@@ -41,6 +44,7 @@ namespace FPSGame.Object
             this.scale = scale;
             this.pos = Vector3.Zero;
             this.fixPos = fixPos;
+            this.fixRot = fixRot;
         }
 
         public virtual void Update(GameTime gameTime)
@@ -65,6 +69,23 @@ namespace FPSGame.Object
             }
         }
 
+        public virtual void DrawAbsolute(GameTime gameTime)
+        {
+            FirstPersonCamera camera = FPSGame.GetInstance().GetFPSCamera();
+
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                foreach (BasicEffect be in mesh.Effects)
+                {
+                    be.EnableDefaultLighting();
+                    be.Projection = camera.GetProjection();
+                    be.View = camera.GetView();
+                    be.World = GetWorld();
+                }
+                mesh.Draw();
+            }
+        }
+
         public virtual void Draw(GameTime gameTime) 
         {
             
@@ -75,7 +96,7 @@ namespace FPSGame.Object
             return this.pos;
         }
 
-        public void SetPosition(Vector3 pos)
+        public virtual void SetPosition(Vector3 pos)
         {
             this.pos = pos;
         }
@@ -85,7 +106,12 @@ namespace FPSGame.Object
             return this.rotation;
         }
 
-        public void SetRotation(Vector3 rotation)
+        public virtual void SetRotation(Quaternion rotation)
+        {
+            this.quat = Matrix.CreateFromQuaternion(rotation);
+        }
+
+        public virtual void SetRotation(Vector3 rotation)
         {
             this.rotation = rotation;
         }
@@ -93,7 +119,7 @@ namespace FPSGame.Object
         public Matrix GetWorld()
         {
             //System.Windows.Forms.MessageBox.Show(pos.X / scale + "/" + pos.Y / scale + "/" + pos.Z / scale);
-            return world * Matrix.CreateScale(scale) * MathUtils.CreateTranslation(fixPos * posMultiplicity) * MathUtils.CreateRotation(rotation) * MathUtils.CreateTranslation(pos * posMultiplicity);
+            return world * Matrix.CreateScale(scale) * ( MathUtils.CreateRotation(rotation + fixRot) * quat ) * MathUtils.CreateTranslation((fixPos + pos) * posMultiplicity);
         }
 
         public void SetWorld(Matrix world)

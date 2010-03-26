@@ -50,10 +50,10 @@ namespace FPSGame.Factory
             return null;
         }
 
-        public static IDisplayObject3D CreateModel(String name, String file, float x, float y, float z, float scale, Vector3 fixedPos, float posMultiplicity)
+        public static IDisplayObject3D CreateModel(String name, String file, float x, float y, float z, float scale, Vector3 fixedPos, Vector3 fixedRot, float posMultiplicity)
         {
             Model m = FPSGame.GetInstance().LoadModel<Model>(file, name);
-            SimpleObject3D obj = new SimpleObject3D(m, scale, fixedPos, posMultiplicity);
+            SimpleObject3D obj = new SimpleObject3D(m, scale, fixedPos, fixedRot, posMultiplicity);
             obj.SetPosition(new Vector3(x, y, z));
             return obj;
         }

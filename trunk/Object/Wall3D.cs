@@ -22,8 +22,24 @@ namespace FPSGame.Object
         private BasicEffect quadEffect;
         private VertexDeclaration quadVertexDecl;
         private Texture2D texture;
+        private Brick brick;
+
+        public Brick GetBrick()
+        {
+            return brick;
+        }
+
+        public void SetBrick(Brick brick)
+        {
+            this.brick = brick;
+        }
 
         private VertexPositionNormalTexture[] Vertices;
+
+        public float? CollideWith(Ray ray)
+        {
+            return RayCollisionDetector.RayIntersectsObject(ray, GetBoundingBox());
+        }
 
         public Texture2D GetTexture()
         {
