@@ -13,6 +13,8 @@ namespace FPSGame.Core
 
         void OnUnload();
 
+        float GetElemSize();
+
         void AddEnemy(SimpleCharacter enemy);
 
         SimpleCharacter[] GetEnemies();

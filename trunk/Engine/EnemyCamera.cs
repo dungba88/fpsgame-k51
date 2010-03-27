@@ -134,10 +134,25 @@ namespace FPSGame.Engine
         public bool CheckForPosibilityCollision(Vector3 src, IDisplayObject dobj)
         {
             if (!(dobj is IDisplayObject3D)) return false;
+            float elemSize = MapLoader.GetInstance().GetMap().GetElemSize();
             IDisplayObject3D obj3d = (IDisplayObject3D)dobj;
+            Vector3 pos = GetPosition();
             Vector3 dir = src - GetPosition();
-            dir.Normalize();
-            return (MathUtils.IsInRange(src + dir * 2, GetPosition() - dir * 2, obj3d.GetPosition()));
+            int signX = Math.Sign(dir.X) == 0 ? 1 : Math.Sign(dir.X);
+            int signZ = Math.Sign(dir.Z) == 0 ? 1 : Math.Sign(dir.Z);
+
+            if (dir.X < elemSize)
+            {
+                src.X = src.X + signX * elemSize;
+                pos.X = pos.X - signX * elemSize;
+            }
+            if (dir.Z < elemSize)
+            {
+                src.Z = src.Z + signZ * elemSize;
+                pos.Z = pos.Z - signZ * elemSize;
+            }
+
+            return (MathUtils.IsInRange(src, GetPosition(), obj3d.GetPosition()));
         }
     }
 }
