@@ -80,7 +80,7 @@ namespace FPSGame.Factory
             s = nodes.Item(0).InnerText.Split(c);
             topleft = new Vector3(float.Parse(s[0]), float.Parse(s[1]), float.Parse(s[2]));
 
-            map = new DefaultMap(matrixSize, name, des, missionDes);
+            map = new DefaultMap(matrixSize, name, des, missionDes, elemSize);
 
             nodes = xml.GetElementsByTagName("player");
             enums = nodes.Item(0).ChildNodes.GetEnumerator();
@@ -260,6 +260,7 @@ namespace FPSGame.Factory
         private int width;
         private int height;
         private ArrayList enemies;
+        private float elemSize;
 
         public int GetWidth()
         {
@@ -295,13 +296,14 @@ namespace FPSGame.Factory
             return (IDisplayObject[])full.ToArray(typeof(IDisplayObject));
         }
 
-        public DefaultMap(Vector2 size, String name, String des, String missionDes)
+        public DefaultMap(Vector2 size, String name, String des, String missionDes, float elemSize)
         {
             this.name = name;
             this.des = des;
             this.missionDes = missionDes;
             this.width = (int)size.Y;
             this.height = (int)size.X;
+            this.elemSize = elemSize;
 
             matrix=new IDisplayObject[width][];
             for (int i = 0; i < matrix.Length;i++ )
@@ -333,6 +335,11 @@ namespace FPSGame.Factory
         public String GetMissionDescription()
         {
             return missionDes;
+        }
+
+        public float GetElemSize()
+        {
+            return elemSize;
         }
 
         public void OnLoad()
