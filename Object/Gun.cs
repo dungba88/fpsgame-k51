@@ -26,7 +26,6 @@ namespace FPSGame.Object
         private int latency;
         private float gunshock;
         private bool drawFire;
-        private bool lastDrawFire;
         private int gunfireLat;
 
         public Gun()
@@ -68,6 +67,7 @@ namespace FPSGame.Object
         {
             if (latency >= MAX_LATENCY)
             {
+                GameEventGenerator.GenerateEvent(default(IObject), default(IObject), GameEventGenerator.EVENT_PLAYER_SHOOT, "24", "", false, false);
                 drawFire = true;
                 if (!shooting)
                 {
@@ -75,7 +75,7 @@ namespace FPSGame.Object
                     latency = 0;
                 }
                 AddShock();
-                EffectUtils.PlaySound(ResourceManager.PLAYER_GUN_SND);
+                EffectUtils.GetInstance().PlaySound(ResourceManager.PLAYER_GUN_SND, false);
                 if (gunshock < MAX_GUN_SHOCK)
                 {
                     gunshock += 1;
@@ -101,6 +101,7 @@ namespace FPSGame.Object
             shooting = false;
             drawFire = false;
             gunfireLat = MAX_GUNFIRE_LATENCY;
+            EffectUtils.GetInstance().StopSound(ResourceManager.PLAYER_GUN_SND);
             if (gunshock > 0)
             {
                 gunshock -= 1;
@@ -117,7 +118,6 @@ namespace FPSGame.Object
         {
             dead = false;
             shockAdd = false;
-            lastDrawFire = false;
             drawFire = false;
             shock = MIN_SHOCK;
             gunshock = 0;

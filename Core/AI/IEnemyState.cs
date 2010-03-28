@@ -13,5 +13,9 @@ namespace FPSGame.Core.AI
         void SetNextState(IEnemyState state);
 
         int GetStateNo();
+
+        bool IsUpdated();
+
+        Vector3 GetInitialPosition();
     }
 }

@@ -10,6 +10,7 @@ using FPSGame.Object;
 using FPSGame.Engine;
 using Microsoft.Xna.Framework.Graphics;
 using XNAnimation;
+using FPSGame.Core.AI;
 
 namespace FPSGame.Factory
 {
@@ -193,6 +194,7 @@ namespace FPSGame.Factory
                     int x = 0;
                     int y = 0;
                     float rot = 0;
+                    String initstate = "idle";
                     IEnumerator enum1 = node.ChildNodes.GetEnumerator();
                     while (enum1.MoveNext())
                     {
@@ -213,18 +215,17 @@ namespace FPSGame.Factory
                         {
                             rot = float.Parse(child.InnerText);
                         }
+                        else if (child.Name == "initial-state")
+                        {
+                            initstate = child.InnerText;
+                        }
                     }
 
                     SkinnedModel m = FPSGame.GetInstance().LoadModel<SkinnedModel>(file, mname);
                     Model wpnModel = ResourceManager.GetResource<Model>(ResourceManager.TERRORIST_WEAPON);
                     IDictionary<String, Vector3> animFixRot = new Dictionary<String, Vector3>();
                     IDictionary<String, Vector3> animFixPos = new Dictionary<String, Vector3>();
-                    //animFixPos.Add("Idle", new Vector3(0.3f, -0.05f, 0.2f));
-                    //animFixPos.Add("Shoot", new Vector3(0.15f, +0.05f, 0.55f));
-                    //animFixPos.Add("Run", new Vector3(0.35f, +0.05f, 0.15f));
-                    //animFixRot.Add("Idle", new Vector3(0, (float)Math.PI * 0.55f, -(float)Math.PI * 0.15f));
-                    //animFixRot.Add("Shoot", new Vector3(-(float)Math.PI * 0.25f, (float)Math.PI * 0.16f, -(float)Math.PI * 0.55f));
-                    //animFixRot.Add("Run", new Vector3(-(float)Math.PI * 0f, (float)Math.PI * 0.56f, -(float)Math.PI * 0f));
+
                     animFixPos.Add("Idle", new Vector3(-0.3f, -0.1f, -0.2f));
                     animFixPos.Add("Shoot", Vector3.Zero);
                     animFixPos.Add("Run", Vector3.Zero);
@@ -236,6 +237,22 @@ namespace FPSGame.Factory
                     enemy.SetPosition(new Vector3(topleft.X + (y + 0.5f) * elemSize, topleft.Y, topleft.Z + (x + 0.5f) * elemSize));
                     enemy.SetRotation(new Vector3(0, (float)Math.PI/180*rot, 0));
                     enemy.AttachObject(weapon, "R_Hand2");
+
+                    //init AI
+                    IEnemyState initState = null;
+                    switch(initstate)
+                    {
+                        case "idle":
+                            initState = new IdleState(enemy);
+                            break;
+                        case "guard":
+                            initState = new GuardState(enemy);
+                            break;
+                        case "patrol":
+                            break;
+                    }
+
+                    enemy.InitAI(new DefEnemyAI(enemy, initState));
                     map.AddEnemy((SimpleCharacter)enemy);
                 }
             }

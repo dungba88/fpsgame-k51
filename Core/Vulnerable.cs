@@ -7,6 +7,6 @@ namespace FPSGame.Core
 {
     public interface Vulnerable
     {
-        void TakeDamage(int dmg);
+        void TakeDamage(float dmg);
     }
 }

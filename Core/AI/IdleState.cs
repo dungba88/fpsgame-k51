@@ -17,12 +17,22 @@ namespace FPSGame.Core.AI
         public IdleState(SimpleCharacter character)
             : base(character)
         {
+            
+        }
 
+        public override void Begin()
+        {
+            base.Begin();
         }
 
         public override void Update(GameTime gameTime)
         {
             GetCharacter().Idle();
+        }
+
+        public override void End()
+        {
+            base.End();
         }
     }
 }

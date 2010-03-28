@@ -93,6 +93,7 @@
     <Compile Include="Core\AI\RunState.cs" />
     <Compile Include="Core\AI\ShootState.cs" />
     <Compile Include="Core\AI\SimpleState.cs" />
+    <Compile Include="Core\AI\StateSessionStorage.cs" />
     <Compile Include="Core\Collidable.cs" />
     <Compile Include="Core\Debugger.cs" />
     <Compile Include="Core\DefaultActionListener.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Factory\TerrainFactory.cs" />
     <Compile Include="FPSGame.cs" />
     <Compile Include="Object\BarBrick.cs" />
+    <Compile Include="Object\Bullet.cs" />
     <Compile Include="Object\Gun.cs" />
     <Compile Include="Object\Line.cs" />
     <Compile Include="Object\PlayerCharacter.cs" />

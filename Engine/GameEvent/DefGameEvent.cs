@@ -12,12 +12,14 @@ namespace FPSGame.Engine.GameEvent
         private IObject target;
         private String eventData;
         private String actionData;
+        private String eventName;
         private bool reqSrc;
         private bool reqTarget;
 
-        public DefGameEvent(IObject src, IObject target, String eventData, String actionData, bool reqSrc, bool reqTarget)
+        public DefGameEvent(IObject src, IObject target, String eventName, String eventData, String actionData, bool reqSrc, bool reqTarget)
         {
             this.src = src;
+            this.eventName = eventName;
             this.target = target;
             this.eventData = eventData;
             this.actionData = actionData;
@@ -33,6 +35,11 @@ namespace FPSGame.Engine.GameEvent
         public IObject GetTarget()
         {
             return target;
+        }
+
+        public String GetEventName()
+        {
+            return eventName;
         }
 
         public String GetEventData()

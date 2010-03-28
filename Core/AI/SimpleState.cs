@@ -12,6 +12,19 @@ namespace FPSGame.Core.AI
         private IEnemyState state;
         private SimpleCharacter enemy;
         private bool dead;
+        private bool updated;
+
+        private Vector3 initPos;
+
+        public Vector3 GetInitialPosition()
+        {
+            return initPos;
+        }
+
+        public bool IsUpdated()
+        {
+            return updated;
+        }
 
         public SimpleCharacter GetCharacter()
         {
@@ -26,6 +39,12 @@ namespace FPSGame.Core.AI
         public virtual void Begin()
         {
             dead = false;
+            updated = false;
+            //try to load the initial position
+            if (StateSessionStorage.IsVarRegistered("Session_State_initPos" + GetCharacter().GetId()))
+                initPos = StateSessionStorage.LoadVar<Vector3>("Session_State_initPos" + GetCharacter().GetId());
+            else
+                initPos = GetCharacter().GetPosition();
         }
 
         public SimpleState(SimpleCharacter character)
@@ -35,11 +54,13 @@ namespace FPSGame.Core.AI
 
         public virtual void Update(GameTime gameTime)
         {
-
+            updated = true;
         }
 
         public virtual void End()
         {
+            //store the initial position
+            StateSessionStorage.StoreVar("Session_State_initPos" + GetCharacter().GetId(), initPos);
             dead = true;
         }
 

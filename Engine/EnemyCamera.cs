@@ -11,12 +11,11 @@ namespace FPSGame.Engine
 {
     public class EnemyCamera : PersonalCamera
     {
-        public const float MAX_ANGLE = (float)Math.PI/180*45;
+        public const float MAX_ANGLE = (float)Math.PI/180*60;
 
         String visible = "visible";
 
         Ray ray;
-        float fpos;
 
         public EnemyCamera(Game game, Vector3 pos, Vector3 target, Vector3 up)
             : base(game, pos, target, up)
@@ -42,12 +41,13 @@ namespace FPSGame.Engine
             if (IsPositionVisible(FPSGame.GetInstance().GetFPSCamera().GetPosition()))
             {
                 FPSGame.GetInstance().SetInfo("spotted player");
-                GameEventGenerator.GenerateEvent(this.GetObject(), default(IObject), GameEventGenerator.EVENT_SPOT_PLAYER, "", true, false);
+                FPSGame.GetInstance().AppendInfo("");
+                GameEventGenerator.GenerateEvent(this.GetObject(), default(IObject), GameEventGenerator.EVENT_SPOT_PLAYER, "", "", true, false);
             }
             else
             {
                 FPSGame.GetInstance().SetInfo("player is not spotted");
-                GameEventGenerator.GenerateEvent(this.GetObject(), default(IObject), GameEventGenerator.EVENT_PLAYER_NOT_SPOTTED, "", true, false);
+                GameEventGenerator.GenerateEvent(this.GetObject(), default(IObject), GameEventGenerator.EVENT_PLAYER_NOT_SPOTTED, "", "", true, false);
             }
             base.Update();
         }
@@ -92,7 +92,10 @@ namespace FPSGame.Engine
 
             //first, check to see if the player is in this unit's field of view
             if (!MathUtils.IsBound(f - MAX_ANGLE, f + MAX_ANGLE, a))
+            {
+                FPSGame.GetInstance().AppendInfo(" (not in field-of-view : " + MathHelper.ToDegrees(f - MAX_ANGLE) + " : " + MathHelper.ToDegrees(a) + " : " + MathHelper.ToDegrees(f + MAX_ANGLE) + ")");
                 return false;
+            }
 
             //if he is, do a ray-cast collision test
             //to see if there is any obstacle between him and this unit
@@ -123,12 +126,23 @@ namespace FPSGame.Engine
                     if (intersection.Value < closestIntersection)
                     {
                         //collide has been detected, so there must be an obstacle between two objects
+                        FPSGame.GetInstance().AppendInfo(" (has an obstacle) "+intersection.Value + " : " + closestIntersection);
                         return false;
                     }
                 }
             }
             //no obstacle found, the player is visible to this unit
             return true;
+        }
+
+        public void Face(Vector3 target)
+        {
+            SetDirection(MathUtils.GetDiff(GetPosition(), target));
+        }
+
+        public void FacePlayer()
+        {
+            Face(FPSGame.GetInstance().GetFPSCamera().GetPosition());
         }
 
         public bool CheckForPosibilityCollision(Vector3 src, IDisplayObject dobj)

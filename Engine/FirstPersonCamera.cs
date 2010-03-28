@@ -92,6 +92,16 @@ namespace FPSGame.Engine
         public override void MoveThrough()
         {
             AddShock();
+            //Generate a sound if the player don't crouch!
+            if (!IsStateActive("crouch"))
+            {
+                EffectUtils.GetInstance().PlaySound(ResourceManager.PLAYER_WALKING_SND, false);
+                GameEventGenerator.GenerateEvent(default(IObject), default(IObject), GameEventGenerator.EVENT_PLAYER_MOVE, "15", "", false, false);
+            }
+            else
+            {
+                EffectUtils.GetInstance().StopSound(ResourceManager.PLAYER_WALKING_SND);
+            }
             base.MoveThrough();
         }
     }

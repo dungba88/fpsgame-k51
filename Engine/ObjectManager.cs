@@ -29,6 +29,18 @@ namespace FPSGame.Engine
             return instance;
         }
 
+        public int FindObjectIndex(IDisplayObject objToFind)
+        {
+            int i = 0;
+            foreach (IDisplayObject obj in objects)
+            {
+                if (obj == objToFind)
+                    return i;
+                i++;
+            }
+            return -1;
+        }
+
         public IDisplayObject[] GetObjects()
         {
             return (IDisplayObject[])objects.ToArray(typeof(IDisplayObject));
@@ -95,13 +107,14 @@ namespace FPSGame.Engine
         {
             if (IsObjectRegistered(obj))
             {
-                removingObjects.Remove(obj);
+                removingObjects.Add(obj);
             }
         }
 
         public void RemoveAllObjects()
         {
-            removingObjects.Clear();
+            foreach (IDisplayObject obj in objects)
+                removingObjects.Add(obj);
         }
 
         public void NotifyAllObservers(IGameEvent evt)
