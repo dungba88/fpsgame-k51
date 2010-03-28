@@ -41,7 +41,7 @@
 			<position>8 2</position>
 			<file-name>PlayerMarine</file-name>
 			<initial-state>guard</initial-state>
-			<initial-rotation>270</initial-rotation>
+			<initial-rotation>90</initial-rotation>
 		</enemy>
 <!--		<enemy>
 			<position>8 9</position>

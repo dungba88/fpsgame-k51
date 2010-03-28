@@ -30,7 +30,7 @@ namespace FPSGame.Engine.GameState
             FPSGame.GetInstance().HideMouse();
             PlayerCharacter character = FPSGame.GetInstance().GetPlayer().CreatePlayer();
             FPSGame.GetInstance().GetFPSCamera().ApplyToPlayer(character);
-            //EffectUtils.PlaySound(ResourceManager.OPERA_THEME_SONG, true);
+            EffectUtils.GetInstance().PlaySound(ResourceManager.OPERA_THEME_SONG, false);
         }
 
         public override void OnDraw(GameTime gameTime)
@@ -53,6 +53,9 @@ namespace FPSGame.Engine.GameState
             MouseState ms = Mouse.GetState();
             IKeyboardControls controls = FPSGame.GetInstance().GetPlayer().GetControls();
             bool running = false;
+
+            if (kb.IsKeyDown(Keys.I))
+                FPSGame.INVISIBLE_MODE = !FPSGame.INVISIBLE_MODE;
 
             if (kb.IsKeyDown(controls.MoveForwardKey()))
             {
@@ -125,7 +128,7 @@ namespace FPSGame.Engine.GameState
         public override void OnEnd()
         {
             FPSGame.GetInstance().ShowMouse();
-            EffectUtils.StopSound(ResourceManager.OPERA_THEME_SONG);
+            EffectUtils.GetInstance().StopSound(ResourceManager.OPERA_THEME_SONG);
         }
 
         public void UpdatePicking()
@@ -156,6 +159,8 @@ namespace FPSGame.Engine.GameState
             if (picked != null)
             {
                 FPSGame.GetInstance().SetInfo("has picked");
+                //notify enemies about the event
+                GameEventGenerator.GenerateEvent(default(IObject), picked, GameEventGenerator.EVENT_PLAYER_HIT, "", "", false, true);
             }
         }
     }

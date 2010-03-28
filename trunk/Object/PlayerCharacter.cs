@@ -92,6 +92,7 @@ namespace FPSGame.Object
         public void StopRunning()
         {
             running = false;
+            EffectUtils.GetInstance().StopSound(ResourceManager.PLAYER_WALKING_SND);
             delta = 0;
         }
 

@@ -44,6 +44,8 @@ namespace FPSGame.Engine
 
         public const String PLAYER_GUN_SND = "playergunsound";
 
+        public const String PLAYER_WALKING_SND = "playerwalkingsound";
+
         public const String OPERA_THEME_SONG = "operatheme";
 
         public const String GUNFIRE = "gunfire";
@@ -51,6 +53,8 @@ namespace FPSGame.Engine
         public const String TERRORIST = "terrorist";
 
         public const String TERRORIST_WEAPON = "terweapon";
+
+        public const String BULLET_BALL = "bulletball";
 
         private static Hashtable resHashTable = new Hashtable();
 

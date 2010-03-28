@@ -88,10 +88,26 @@ namespace FPSGame.Core
                 min = min % ((float)Math.PI * 2);
             if (Math.Abs(max) > Math.PI * 2)
                 max = max % ((float)Math.PI * 2);
+            if (Math.Abs(angle) > Math.PI * 2)
+                angle = angle % ((float)Math.PI * 2);
+
+            //FPSGame.GetInstance().SetInfo(min + " " + angle + " " + max + " || ");
+            if (angle >= min && angle <= max)
+                return true;
 
             if (min < 0) min += (float)Math.PI * 2;
             if (max < 0) max += (float)Math.PI * 2;
-            if (angle < min || angle > max)
+            if (angle < 0) angle += (float)Math.PI * 2;
+
+            if (angle >= min && angle <= max)
+                return true;
+
+            float minv = Math.Min(min, max);
+            float maxv = Math.Max(min, max);
+
+            //FPSGame.GetInstance().AppendInfo(minv + " " + angle + " " + maxv + " || ");
+
+            if (angle < minv || angle > maxv)
                 return false;
             return true;
         }

@@ -132,7 +132,7 @@ namespace FPSGame.Object
             return dead;
         }
 
-        public void Begin()
+        public virtual void Begin()
         {
             ObjectManager.GetInstance().RegisterObject(this);
         }

@@ -27,6 +27,7 @@ namespace FPSGame
         public const int WIDTH = 800;
         public const int HEIGHT = 600;
         public const bool FULLSCREEN_ENABLED = false;
+        public static bool INVISIBLE_MODE = false;
 
         public GraphicsDeviceManager graphics { get; protected set; }
         SpriteBatch spriteBatch;
@@ -113,10 +114,11 @@ namespace FPSGame
             ResourceManager.LoadTexture2D(Content, "jailbars", ResourceManager.JAIL_BARS);
             ResourceManager.LoadTexture2D(Content, "gunfire1", ResourceManager.GUNFIRE);
             ResourceManager.RegisterResource(ResourceManager.FONT, Content.Load<SpriteFont>("Times New Roman"));
-            ResourceManager.RegisterResource(ResourceManager.PLAYER_GUN_SND, Content.Load<SoundEffect>(@"Sounds/Gun 5"));
-            ResourceManager.RegisterResource(ResourceManager.OPERA_THEME_SONG, Content.Load<SoundEffect>(@"Sounds/opera"));
+            //ResourceManager.RegisterResource(ResourceManager.PLAYER_GUN_SND, Content.Load<SoundEffect>(@"Sounds/Gun 5"));
+            //ResourceManager.RegisterResource(ResourceManager.OPERA_THEME_SONG, Content.Load<SoundEffect>(@"Sounds/opera"));
             ResourceManager.RegisterResource(ResourceManager.TERRORIST, Content.Load<SkinnedModel>(@"Models/PlayerMarine"));
             ResourceManager.RegisterResource(ResourceManager.TERRORIST_WEAPON, Content.Load<Model>(@"Models/colt-xm177"));
+            ResourceManager.RegisterResource(ResourceManager.BULLET_BALL, Content.Load<Model>(@"Models/ball"));
 
             //enemy = new SimpleCharacter(ResourceManager.GetResource<SkinnedModel>(ResourceManager.TERRORIST), 0.1f, new Vector3(0, -2, 0), null, 10);
             //enemy.AttachWeapon(ResourceManager.GetResource<Model>(ResourceManager.TERRORIST_WEAPON));
@@ -172,6 +174,7 @@ namespace FPSGame
             {
                 currentState.Update(gameTime);
             }
+            EffectUtils.GetInstance().Update(gameTime);
             base.Update(gameTime);
             isUpdating = false;
         }
@@ -190,6 +193,10 @@ namespace FPSGame
             {
                 currentState.Draw(gameTime);
                 DrawInformation(info + infoapp);
+                DrawString("Press I to switch to Invisible Mode On/Off", new Vector2(10, 25), Color.White);
+                DrawString("Is In Invisible Mode: " + INVISIBLE_MODE, new Vector2(10, 40), Color.White);
+                int i = ObjectManager.GetInstance().GetObjects().Count();
+                DrawString("Current Objects: " + i, new Vector2(10, 55), Color.White);
 
                 //reset render state for 3D drawing
                 FPSGame.GetInstance().GraphicsDevice.RenderState.DepthBufferEnable = true;

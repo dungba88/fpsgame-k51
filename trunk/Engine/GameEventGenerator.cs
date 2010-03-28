@@ -17,9 +17,12 @@ namespace FPSGame.Engine
 
         public const String EVENT_PLAYER_MOVE = "playermove";
 
-        public static void GenerateEvent(IObject src, IObject target, String eventData, String actionData, bool reqSrc, bool reqTarget)
+        public const String EVENT_PLAYER_HIT = "playerhit";
+
+        public static void GenerateEvent(IObject src, IObject target, String eventName, String eventData, String actionData, bool reqSrc, bool reqTarget)
         {
-            DefGameEvent evt = new DefGameEvent(src, target, eventData, actionData, reqSrc, reqTarget);
+            if (FPSGame.INVISIBLE_MODE) return;
+            DefGameEvent evt = new DefGameEvent(src, target, eventName, eventData, actionData, reqSrc, reqTarget);
             ObjectManager.GetInstance().NotifyAllObservers(evt);
         }
     }

@@ -12,6 +12,8 @@ namespace FPSGame.Engine.GameEvent
 
         IObject GetTarget();
 
+        String GetEventName();
+
         String GetEventData();
 
         String GetActionData();

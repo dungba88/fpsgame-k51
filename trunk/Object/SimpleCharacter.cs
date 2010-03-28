@@ -16,11 +16,14 @@ namespace FPSGame.Object
 {
     public class SimpleCharacter : SimpleObject3D, IBoxShaped, Collidable , IObserver
     {
+        public const int MAX_GUN_DELAY = 10;
+
         public IDictionary<String, Vector3> animFixRot;
         public IDictionary<String, Vector3> animFixPos;
         public float scale;
         //private IDictionary<String, SkinnedModel> models;
         //private IDictionary<String, AnimationController> animControllers;
+        private int gunDelay;
         private IEnemyAI ai;
         private SkinnedModel currentModel;
         private AnimationController currentAnimation;
@@ -31,6 +34,11 @@ namespace FPSGame.Object
         private bool guard;
         private EnemyCamera cam;
         private String currentAnim;
+
+        public int GetId()
+        {
+            return ObjectManager.GetInstance().FindObjectIndex(this);
+        }
 
         public EnemyCamera GetCamera()
         {
@@ -45,6 +53,11 @@ namespace FPSGame.Object
         public void Guard(bool guard)
         {
             this.guard = guard;
+        }
+
+        public void InitAI(IEnemyAI ai)
+        {
+            this.ai = ai;
         }
 
         public SimpleCharacter(SkinnedModel model, float scale, Effect eff, float posMultiplicity)
@@ -62,7 +75,7 @@ namespace FPSGame.Object
         private void init(SkinnedModel model, Effect eff, IDictionary<String, Vector3> animFixPos, IDictionary<String, Vector3> animFixRot)
         {
             //init camera
-            ai = new DefEnemyAI(this, new IdleState(this));
+            gunDelay = 0;
             Vector3 pos = GetPosition();
             pos.Y = Camera.HEIGHT;
             Vector3 rot = new Vector3((float)Math.Cos(GetRotation().Y), 0, (float)Math.Sin(GetRotation().Y));
@@ -109,11 +122,21 @@ namespace FPSGame.Object
 
         public void Shoot()
         {
+            if (gunDelay < MAX_GUN_DELAY) return;
+            gunDelay = 0;
+            Model m = ResourceManager.GetResource<Model>(ResourceManager.BULLET_BALL);
+            Vector3 dir = GetCamera().GetDirection();
+            Vector3 pos = attachment.GetPosition();
+            Bullet b = new Bullet(m, 0.05f, Vector3.Zero, Vector3.Zero, 18f, 100, 0.5f, 10, new Vector3(dir.Z, dir.Y, dir.X));
+            b.SetPosition(new Vector3(pos.X, EnemyCamera.HEIGHT*0.75f, pos.Z));
+            b.Begin();
             RunAnimation("Shoot");
         }
 
         public override void Update(GameTime gameTime)
         {
+            if (gunDelay < MAX_GUN_DELAY)
+                gunDelay++;
             currentAnimation.Update(gameTime.ElapsedGameTime, GetWorld());
             cam.Update(gameTime);
             ai.Update(gameTime);
