@@ -41,6 +41,7 @@ namespace FPSGame
         private bool isUpdating;
         private bool shouldEnd;
         private String info = "";
+        private String info2 = "";
         private String infoapp = "";
         SimpleCharacter enemy;
 
@@ -195,6 +196,7 @@ namespace FPSGame
                 DrawInformation(info + infoapp);
                 DrawString("Press I to switch to Invisible Mode On/Off", new Vector2(10, 25), Color.White);
                 DrawString("Is In Invisible Mode: " + INVISIBLE_MODE, new Vector2(10, 40), Color.White);
+                DrawString(info2, new Vector2(10, 70), Color.White);
                 int i = ObjectManager.GetInstance().GetObjects().Count();
                 DrawString("Current Objects: " + i, new Vector2(10, 55), Color.White);
 
@@ -218,6 +220,11 @@ namespace FPSGame
             //DrawString("srcprj: " + srcprj.X + "/" + srcprj.Y + " dstprj: " + dstprj.X + "/" + dstprj.Y, new Vector2(10, 25), Color.Red);
             line.Render(new Vector2(srcprj.X, srcprj.Y), new Vector2(dstprj.X, dstprj.Y), Color.Red, 0);
             //line.Render(new Vector2(0, 0), new Vector2(400, 400), Color.Red, 0);
+        }
+
+        public void SetInfo2(String s)
+        {
+            info2 = s;
         }
 
         public void SetInfo(String s)

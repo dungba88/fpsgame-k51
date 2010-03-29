@@ -156,9 +156,44 @@ namespace FPSGame.Object
             return wall;
         }
 
+        private void RemoveEdge(Vector2 dst)
+        {
+            Graph g = MapLoader.GetInstance().GetMap().GetGraph();
+            GraphVertex v1 = g.FindVertex(index);
+            if (v1 == null) return;
+
+            GraphEdge edge = v1.FindEdge(dst);
+            if (edge == null) return;
+        }
+
+        private void RemoveWestEdge()
+        {
+            RemoveEdge(new Vector2(index.X - 1, index.Y));
+        }
+
+        private void RemoveEastEdge()
+        {
+            RemoveEdge(new Vector2(index.X + 1, index.Y));
+        }
+
+        private void RemoveNorthEdge()
+        {
+            RemoveEdge(new Vector2(index.X, index.Y - 1));
+        }
+
+        private void RemoveSouthEdge()
+        {
+            RemoveEdge(new Vector2(index.X, index.Y + 1));
+        }
+
         public Wall3D CreateWall(int i)
         {
             Vector3 pos = GetPosition();
+            if (i == 0) RemoveWestEdge();
+            if (i == 1) RemoveEastEdge();
+            if (i == 2) RemoveNorthEdge();
+            if (i == 3) RemoveSouthEdge();
+
             if (i == 0) return CreateWall(pos.X - width / 2, pos.Y, pos.Z, new Vector3(1, 0, 0));
             if (i == 1) return CreateWall(pos.X + width / 2, pos.Y, pos.Z, new Vector3(-1, 0, 0));
             if (i == 2) return CreateWall(pos.X, pos.Y, pos.Z - height / 2, new Vector3(0, 0, 1));

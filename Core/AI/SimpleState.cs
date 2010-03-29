@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FPSGame.Object;
 using Microsoft.Xna.Framework;
+using System.Collections;
 
 namespace FPSGame.Core.AI
 {
@@ -13,6 +14,7 @@ namespace FPSGame.Core.AI
         private SimpleCharacter enemy;
         private bool dead;
         private bool updated;
+        private ArrayList plugins;
 
         private Vector3 initPos;
 
@@ -40,28 +42,58 @@ namespace FPSGame.Core.AI
         {
             dead = false;
             updated = false;
+            String var = "Session_State_initPos" + GetCharacter().GetId();
             //try to load the initial position
-            if (StateSessionStorage.IsVarRegistered("Session_State_initPos" + GetCharacter().GetId()))
-                initPos = StateSessionStorage.LoadVar<Vector3>("Session_State_initPos" + GetCharacter().GetId());
+            if (StateSessionStorage.IsVarRegistered(var))
+            {
+                initPos = StateSessionStorage.LoadVar<Vector3>(var);
+            }
             else
+            {
                 initPos = GetCharacter().GetPosition();
+            }
+            //store the initial position
+            StateSessionStorage.StoreVar(var, initPos);
+            foreach (StatePlugin plg in plugins)
+            {
+                plg.Begin();
+            }
         }
 
         public SimpleState(SimpleCharacter character)
         {
             enemy = character;
+            plugins = new ArrayList();
+        }
+
+        public void AddPlugin(StatePlugin plg)
+        {
+            plugins.Add(plg);
+            plg.Begin();
+        }
+
+        public void RemovePlugin(StatePlugin plg)
+        {
+            plg.End();
+            plugins.Remove(plg);
         }
 
         public virtual void Update(GameTime gameTime)
         {
+            foreach (StatePlugin plg in plugins)
+            {
+                plg.Update(gameTime);
+            }
             updated = true;
         }
 
         public virtual void End()
         {
-            //store the initial position
-            StateSessionStorage.StoreVar("Session_State_initPos" + GetCharacter().GetId(), initPos);
             dead = true;
+            foreach (StatePlugin plg in plugins)
+            {
+                plg.End();
+            }
         }
 
         public bool IsDead()
@@ -77,6 +109,11 @@ namespace FPSGame.Core.AI
         public void SetNextState(IEnemyState state)
         {
             this.state = state;
+        }
+
+        public virtual bool CanInterrupted()
+        {
+            return false;
         }
     }
 }

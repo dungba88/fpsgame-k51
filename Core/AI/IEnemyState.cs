@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using FPSGame.Object;
 
 namespace FPSGame.Core.AI
 {
@@ -17,5 +18,9 @@ namespace FPSGame.Core.AI
         bool IsUpdated();
 
         Vector3 GetInitialPosition();
+
+        SimpleCharacter GetCharacter();
+
+        bool CanInterrupted();
     }
 }

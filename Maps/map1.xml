@@ -43,7 +43,7 @@
 			<initial-state>guard</initial-state>
 			<initial-rotation>90</initial-rotation>
 		</enemy>
-<!--		<enemy>
+		<enemy>
 			<position>8 9</position>
 			<file-name>PlayerMarine</file-name>
 			<initial-state>idle</initial-state>
@@ -66,6 +66,14 @@
 			<initial-rotation>90</initial-rotation>
 		</enemy>
 		<enemy>
+			<position>11 3</position>
+			<name>private</name>
+			<file-name>PlayerMarine</file-name>
+			<initial-state>patrol</initial-state>
+			<patrol-to>20 12</patrol-to>
+			<initial-rotation>90</initial-rotation>
+		</enemy>
+		<enemy>
 			<position>11 10</position>
 			<name>private</name>
 			<file-name>PlayerMarine</file-name>
@@ -79,7 +87,7 @@
 			<initial-state>patrol</initial-state>
 			<patrol-to>16 21</patrol-to>
 			<initial-rotation>90</initial-rotation>
-		</enemy>-->
+		</enemy>
 	</enemies>
 	<models>
 		<model>

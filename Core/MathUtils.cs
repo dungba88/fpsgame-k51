@@ -3,11 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using FPSGame.Engine;
+using FPSGame.Factory;
 
 namespace FPSGame.Core
 {
     public class MathUtils
     {
+        public static Vector2 GetMatrixVector(Vector3 pos, float elemSize)
+        {
+            pos.X = (int)(pos.X / elemSize);
+            pos.Z = (int)(pos.Z / elemSize);
+            return new Vector2(pos.X, pos.Z);
+        }
+
+        public static Vector3 GetWorldVector(Vector2 pos, float elemSize)
+        {
+            pos.X = (int)((pos.X + 0.5f) * elemSize);
+            pos.Y = (int)((pos.Y + 0.5f) * elemSize);
+            return new Vector3(pos.X, 0, pos.Y);
+        }
+
+        public static bool Equal(Vector3 v1, Vector3 v2, float elemSize)
+        {
+            Vector2 v2_1 = GetMatrixVector(v1, elemSize);
+            Vector2 v2_2 = GetMatrixVector(v2, elemSize);
+
+            if (v2_1.X == v2_2.X && v2_1.Y == v2_2.Y)
+                return true;
+            return false;
+        }
+
         public static Matrix CreateTranslation(Vector3 pos)
         {
             return Matrix.CreateTranslation(pos);

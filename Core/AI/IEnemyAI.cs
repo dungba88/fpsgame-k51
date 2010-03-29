@@ -9,8 +9,12 @@ namespace FPSGame.Core.AI
 {
     public interface IEnemyAI
     {
+        void Begin();
+
         void Update(GameTime gameTime);
 
         void Notify(IGameEvent evt);
+
+        void SetInitialState(IEnemyState state);
     }
 }

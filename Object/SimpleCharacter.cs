@@ -17,6 +17,7 @@ namespace FPSGame.Object
     public class SimpleCharacter : SimpleObject3D, IBoxShaped, Collidable , IObserver
     {
         public const int MAX_GUN_DELAY = 10;
+        public static int total;
 
         public IDictionary<String, Vector3> animFixRot;
         public IDictionary<String, Vector3> animFixPos;
@@ -34,10 +35,21 @@ namespace FPSGame.Object
         private bool guard;
         private EnemyCamera cam;
         private String currentAnim;
+        private float spd = 0.15f;
+        private IEnemyState initState;
+        private int id;
+
+        public override void Begin()
+        {
+            id = total++;
+            ai.SetInitialState(initState);
+            ai.Begin();
+            base.Begin();
+        }
 
         public int GetId()
         {
-            return ObjectManager.GetInstance().FindObjectIndex(this);
+            return id;
         }
 
         public EnemyCamera GetCamera()
@@ -55,9 +67,20 @@ namespace FPSGame.Object
             this.guard = guard;
         }
 
-        public void InitAI(IEnemyAI ai)
+        public void InitAI(IEnemyAI ai, IEnemyState initState)
         {
             this.ai = ai;
+            this.initState = initState;
+        }
+
+        public void SetSpeed(float spd)
+        {
+            this.spd = spd;
+        }
+
+        public float GetSpeed()
+        {
+            return spd;
         }
 
         public SimpleCharacter(SkinnedModel model, float scale, Effect eff, float posMultiplicity)
@@ -118,6 +141,8 @@ namespace FPSGame.Object
         public void Run()
         {
             RunAnimation("Run");
+            Vector3 dir = cam.GetDirection();
+            SetPosition(GetPosition() + new Vector3(dir.Z, 0, dir.X) * spd);
         }
 
         public void Shoot()
@@ -140,6 +165,7 @@ namespace FPSGame.Object
             currentAnimation.Update(gameTime.ElapsedGameTime, GetWorld());
             cam.Update(gameTime);
             ai.Update(gameTime);
+            Vector3 dir = cam.GetDirection();
             base.Update(gameTime);
         }
 
@@ -237,13 +263,13 @@ namespace FPSGame.Object
         public override void SetPosition(Vector3 pos)
         {
             base.SetPosition(pos);
-            cam.Update();
+            cam.SimpleUpdate();
         }
 
         public override void SetRotation(Vector3 rotation)
         {
             base.SetRotation(rotation);
-            cam.Update();
+            cam.SimpleUpdate();
         }
 
         #region IObserver Members
