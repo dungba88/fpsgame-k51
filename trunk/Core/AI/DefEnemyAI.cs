@@ -22,10 +22,21 @@ namespace FPSGame.Core.AI
 
         private IEnemyState currentState;
 
-        public DefEnemyAI(SimpleCharacter character, IEnemyState initialState)
+        private bool began = false;
+
+        public DefEnemyAI(SimpleCharacter character)
         {
             this.character = character;
-            this.initialState = initialState;
+        }
+
+        public void SetInitialState(IEnemyState state)
+        {
+            this.initialState = state;
+        }
+
+        public void Begin()
+        {
+            began = true;
             SetState(initialState);
         }
 
@@ -33,22 +44,28 @@ namespace FPSGame.Core.AI
         {
             if (currentState != null)
             {
-                if (state.GetType() == currentState.GetType())
+                if (state.GetType() == currentState.GetType() && state.CanInterrupted())
                     return;
                 currentState.End();
             }
+            FPSGame.GetInstance().SetInfo2("State changed from "+currentState+" to "+state);
             currentState = state;
             currentState.Begin();
         }
 
         public void Update(Microsoft.Xna.Framework.GameTime gameTime)
         {
-            currentState.Update(gameTime);
+            if (!began) return;
+            if (currentState != null)
+                currentState.Update(gameTime);
         }
 
         public void Notify(global::FPSGame.Engine.GameEvent.IGameEvent evt)
         {
             //System.Windows.Forms.MessageBox.Show(evt.GetSource() + " / " + character);
+
+            if (!began) return;
+
             if (evt.RequireSource() && evt.GetSource() != character) return;
 
             if (evt.RequireTarget() && evt.GetTarget() != character) return;
@@ -86,7 +103,8 @@ namespace FPSGame.Core.AI
                     if (character.IsGuarding())
                     {
                         //if we're guarding, dont' follow him!
-                        SetState(new GuardState(character));
+                        //SetState(new GuardState(character));
+                        ChangeToFindState();
                     }
                     else
                     {
@@ -94,6 +112,16 @@ namespace FPSGame.Core.AI
                         ChangeToFindState();
                     }
                 }
+            }
+
+            else if (evt.GetEventName() == GameEventGenerator.EVENT_RESET_STATE)
+            {
+                if (initialState is PatrolState)
+                    SetState(new PatrolState(character, Vector3.Zero, Vector3.Zero));
+                else if (initialState is GuardState)
+                    SetState(new GuardState(character));
+                else if (initialState is IdleState)
+                    SetState(new IdleState(character));
             }
         }
 
@@ -125,6 +153,7 @@ namespace FPSGame.Core.AI
 
         private void ChangeToFindState()
         {
+            SetState(new FollowState(character, character.GetPosition(), FPSGame.GetInstance().GetFPSCamera().GetPosition()));
         }
 
         private Vector3 GetPlayerPosition()

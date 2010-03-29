@@ -37,6 +37,8 @@ namespace FPSGame.Core
 
         String GetMissionDescription();
 
+        Graph GetGraph();
+
         int GetWidth();
 
         int GetHeight();

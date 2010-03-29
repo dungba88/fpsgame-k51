@@ -56,7 +56,9 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Xna.Framework, Version=3.1.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d" />
+    <Reference Include="Microsoft.Xna.Framework, Version=3.1.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Xna.Framework.Game, Version=3.1.0.0, Culture=neutral, PublicKeyToken=6d5c3888ef60e27d" />
     <Reference Include="mscorlib">
       <Private>False</Private>
@@ -86,13 +88,17 @@
   <ItemGroup>
     <Compile Include="Core\ActionEvent.cs" />
     <Compile Include="Core\AI\DefEnemyAI.cs" />
+    <Compile Include="Core\AI\FollowState.cs" />
     <Compile Include="Core\AI\GuardState.cs" />
     <Compile Include="Core\AI\IdleState.cs" />
     <Compile Include="Core\AI\IEnemyAI.cs" />
     <Compile Include="Core\AI\IEnemyState.cs" />
+    <Compile Include="Core\AI\PatrolState.cs" />
+    <Compile Include="Core\AI\RotatePlugin.cs" />
     <Compile Include="Core\AI\RunState.cs" />
     <Compile Include="Core\AI\ShootState.cs" />
     <Compile Include="Core\AI\SimpleState.cs" />
+    <Compile Include="Core\AI\StatePlugin.cs" />
     <Compile Include="Core\AI\StateSessionStorage.cs" />
     <Compile Include="Core\Collidable.cs" />
     <Compile Include="Core\Debugger.cs" />
@@ -100,6 +106,8 @@
     <Compile Include="Core\DefaultKeyboardControls.cs" />
     <Compile Include="Core\Drawable.cs" />
     <Compile Include="Core\EffectUtils.cs" />
+    <Compile Include="Core\Graph.cs" />
+    <Compile Include="Core\GraphVertex.cs" />
     <Compile Include="Core\IActionDispatcher.cs" />
     <Compile Include="Core\IActionEvent.cs" />
     <Compile Include="Core\ActionListener.cs" />
@@ -113,6 +121,7 @@
     <Compile Include="Core\IPlayer.cs" />
     <Compile Include="Core\ISphereShaped.cs" />
     <Compile Include="Core\ISubject.cs" />
+    <Compile Include="Core\GraphEdge.cs" />
     <Compile Include="Core\Player.cs" />
     <Compile Include="Core\Vulnerable.cs" />
     <Compile Include="Core\MathUtils.cs" />
@@ -129,6 +138,7 @@
     <Compile Include="Engine\ICamera.cs" />
     <Compile Include="Engine\ObjectManager.cs" />
     <Compile Include="Engine\PersonalCamera.cs" />
+    <Compile Include="Library\PriorityQueue.cs" />
     <Compile Include="Engine\RayCollisionDetector.cs" />
     <Compile Include="Engine\ResourceManager.cs" />
     <Compile Include="Factory\MapLoader.cs" />

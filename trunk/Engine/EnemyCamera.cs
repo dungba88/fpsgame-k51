@@ -28,7 +28,7 @@ namespace FPSGame.Engine
             ApplyToObject(character);
         }
 
-        public override void Update()
+        public void SimpleUpdate()
         {
             IDisplayObject obj = GetObject();
             if (obj != null && obj is SimpleCharacter)
@@ -38,6 +38,11 @@ namespace FPSGame.Engine
                 this.pos.Y = Camera.HEIGHT;
                 this.dir = new Vector3((float)Math.Cos(character.GetRotation().Y), 0, (float)Math.Sin(character.GetRotation().Y));
             }
+        }
+
+        public override void Update()
+        {
+            SimpleUpdate();
             if (IsPositionVisible(FPSGame.GetInstance().GetFPSCamera().GetPosition()))
             {
                 FPSGame.GetInstance().SetInfo("spotted player");

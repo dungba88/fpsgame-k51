@@ -9,6 +9,10 @@ namespace FPSGame.Core.AI
 {
     public class IdleState : SimpleState
     {
+        public const float MAX_DELAY = 10000;   //10000ms or 10s
+
+        private float delay;
+
         public override int GetStateNo()
         {
             return 1;
@@ -28,6 +32,8 @@ namespace FPSGame.Core.AI
         public override void Update(GameTime gameTime)
         {
             GetCharacter().Idle();
+
+            base.Update(gameTime);
         }
 
         public override void End()

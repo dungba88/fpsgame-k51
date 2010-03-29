@@ -14,7 +14,7 @@ using FPSGame.Core.AI;
 
 namespace FPSGame.Factory
 {
-    class MapLoader
+    public class MapLoader
     {
         private static MapLoader ldr = new MapLoader();
         private IMap map;
@@ -194,6 +194,7 @@ namespace FPSGame.Factory
                     int x = 0;
                     int y = 0;
                     float rot = 0;
+                    Vector3 patrolTo = Vector3.Zero;
                     String initstate = "idle";
                     IEnumerator enum1 = node.ChildNodes.GetEnumerator();
                     while (enum1.MoveNext())
@@ -218,6 +219,11 @@ namespace FPSGame.Factory
                         else if (child.Name == "initial-state")
                         {
                             initstate = child.InnerText;
+                        }
+                        else if (child.Name == "patrol-to")
+                        {
+                            s = child.InnerText.Split(c);
+                            patrolTo = new Vector3(topleft.X + (int.Parse(s[1]) + 0.5f) * elemSize, topleft.Y, topleft.Z + (int.Parse(s[0]) + 0.5f) * elemSize);
                         }
                     }
 
@@ -249,14 +255,16 @@ namespace FPSGame.Factory
                             initState = new GuardState(enemy);
                             break;
                         case "patrol":
+                            initState = new PatrolState(enemy, enemy.GetPosition(), patrolTo);
                             break;
                     }
 
-                    enemy.InitAI(new DefEnemyAI(enemy, initState));
+                    enemy.InitAI(new DefEnemyAI(enemy), initState);
                     map.AddEnemy((SimpleCharacter)enemy);
                 }
             }
 
+            System.Console.Write("Map readed successfully!\n");
             map.OnLoad();
         }
 
@@ -278,6 +286,7 @@ namespace FPSGame.Factory
         private int height;
         private ArrayList enemies;
         private float elemSize;
+        private Graph graph;
 
         public int GetWidth()
         {
@@ -339,6 +348,121 @@ namespace FPSGame.Factory
             enemies = new ArrayList();
         }
 
+        private void BuildGraph()
+        {
+            System.Console.Write("Building graph...\n");
+            bool b = false;
+            GraphVertex v = null;
+            ArrayList vertices = new ArrayList();
+            ArrayList edges = new ArrayList();
+
+            //find the first vertex
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {   
+                    IDisplayObject obj = matrix[i][j];
+                    if (obj != null)
+                    {
+                        if (!b)
+                        {
+                            b = true;
+                            v = new GraphVertex(new Vector2(i, j));
+                            break;
+                        }
+                    }
+                }
+            }
+
+            System.Console.Write("Found the first vertex...\n");
+
+            if (!b) return;
+            Queue scan = new Queue();
+            Queue scanned = new Queue();
+
+            scan.Enqueue(v);
+
+            graph = new Graph(width, height);
+            graph.AddVertex(v);
+
+            System.Console.Write("Scanning edges...\n");
+            while (scan.Count > 0)
+            {
+                GraphVertex gv = (GraphVertex)scan.Dequeue();
+                scanned.Enqueue(gv);
+                if (!vertices.Contains(gv))
+                    vertices.Add(gv);
+                Vector2 gvPos = gv.GetVertex();
+
+                //find adjacent vertices
+                
+                //find north vertex
+                AddVertex(vertices, edges, gv, new Vector2(gvPos.X, gvPos.Y - 1), scan, scanned);
+
+                //find south vertex
+                AddVertex(vertices, edges, gv, new Vector2(gvPos.X, gvPos.Y + 1), scan, scanned);
+
+                //find west vertex
+                AddVertex(vertices, edges, gv, new Vector2(gvPos.X - 1, gvPos.Y), scan, scanned);
+
+                //find north vertex
+                AddVertex(vertices, edges, gv, new Vector2(gvPos.X + 1, gvPos.Y), scan, scanned);
+            }
+
+            System.Console.Write("Graph builded...\n");
+        }
+
+        public Graph GetGraph()
+        {
+            return graph;
+        }
+
+        private void AddVertex(ArrayList vertices, ArrayList edges, GraphVertex gv, Vector2 vector, Queue scan, Queue scanned)
+        {
+            System.Console.Write("Checking " + vector.X + ", " + vector.Y + " for Vertex(" + gv.GetVertex().X + ", " + gv.GetVertex().Y + ")...");
+            GraphVertex v2 = graph.FindVertex(vector);
+            if (v2 == null)
+            {
+                System.Console.Write("Not found\n");
+                v2 = new GraphVertex(vector);
+            }
+            else
+                System.Console.Write("Found\n");
+            if (IsAdjacent(gv, v2))
+            {
+                //add to the vertices list
+                vertices.Add(v2);
+
+                System.Console.Write("Adjacent found: Vertex(" + gv.GetVertex().X + ", " + gv.GetVertex().Y + ") and Vertex(" + v2.GetVertex().X + ", " + v2.GetVertex().Y + ")\n");
+
+                if (!scan.Contains(v2) && !scanned.Contains(v2))
+                {
+                    scan.Enqueue(v2);
+                    graph.AddVertex(v2);
+                }
+
+                //add new edge
+                GraphEdge edge = gv.FindEdge(vector);
+                if (edge == null)
+                {
+                    edge = new GraphEdge(gv, v2);
+                    edges.Add(edges);
+                    graph.AddEdge(edge);
+                }
+            }
+        }
+
+        private bool IsAdjacent(GraphVertex v1, GraphVertex v2)
+        {
+            Vector2 src = v1.GetVertex();
+            Vector2 dst = v2.GetVertex();
+
+            if (dst.X < 0 || dst.Y < 0) return false;
+            if (dst.X > width - 1 || dst.Y > height - 1) return false;
+            if (matrix[(int)dst.X][(int)dst.Y] == null) return false;
+            return true;
+        }
+
         public String GetName()
         {
             return name;
@@ -361,6 +485,9 @@ namespace FPSGame.Factory
 
         public void OnLoad()
         {
+            //build a graph on top of the current matrix
+            BuildGraph();
+
             for (int i = 0; i < matrix.Length;i++ )
             {
                 for (int j = 0; j < matrix[i].Length; j++)

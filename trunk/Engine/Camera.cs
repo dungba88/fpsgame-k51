@@ -114,6 +114,7 @@ namespace FPSGame.Engine
 
         public virtual void SetDirection(Vector3 dir)
         {
+            dir.Normalize();
             this.dir = dir;
         }
 
