@@ -8,33 +8,32 @@ Content\Images\oneplayer.xnb
 Content\Images\oneplayer_off.xnb
 Content\Images\option.xnb
 Content\Images\option_off.xnb
-Content\Images\floor.xnb
-Content\Times New Roman.xnb
-Content\Images\wall.xnb
 Content\Images\floor111.xnb
 Content\Images\wall222.xnb
 Content\Images\ceiling222.xnb
 Content\Images\playergun.xnb
-Content\Sounds\Download Gun Fire Sound ringtones to your cell phone - effect fire gun - 4268258 - Zedge.xnb
-Content\Sounds\Gun 444444.xnb
-Content\Sounds\Gun3333.xnb
-Content\Sounds\Guns 22222.xnb
-Content\Sounds\Gun_Fire5555555.xnb
+Content\Images\gunfire1.xnb
+Content\Images\jailbars.xnb
+Content\Times New Roman.xnb
+Content\Sounds\opera.xnb
+Content\Sounds\Gun 5.xnb
 Content\Sounds\Reactor Core.xnb
 Content\Sounds\Starport Battle.xnb
-Content\Sounds\opera.xnb
-Content\Sounds\gun.xnb
-Content\Sounds\Machine gun 2.xnb
-Content\Sounds\Gun 5.xnb
-Content\Images\jailbars.xnb
-Content\Images\playergun1.xnb
-Content\Images\gunfire1.xnb
-Content\Images\hit.xnb
-Content\Sounds\Download Gun Fire Sound ringtones to your cell phone - effect fire gun - 4268258 - Zedge.wma
-Content\Sounds\Gun 444444.wma
-Content\Sounds\Gun3333.wma
-Content\Sounds\Guns 22222.wma
-Content\Sounds\Gun_Fire5555555.wma
+Content\Models\wardrobe.xnb
+Content\Models\PlayerMarine.xnb
+Content\Models\ball.xnb
+Content\Models\colt-xm177.xnb
+Content\Textures\PlayerMarineDiffuse_0.xnb
+Content\Textures\PlayerMarineNormal_0.xnb
+Content\Models\colt-xm177_0.xnb
+Content\Models\Colt- 3_0.xnb
+Content\Models\Colt- 1_0.xnb
+Content\Models\Colt- 2_0.xnb
+Content\Models\Colt- 5_0.xnb
+Content\Models\Colt- 4_0.xnb
 Content\Sounds\Reactor Core.wma
 Content\Sounds\Starport Battle.wma
+Content\Sounds\xactProject.xgs
+Content\Sounds\Wave Bank.xwb
+Content\Sounds\Sound Bank.xsb
 Maps\map1.xml
