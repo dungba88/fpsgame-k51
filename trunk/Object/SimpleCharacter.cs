@@ -14,7 +14,7 @@ using FPSGame.Core.AI;
 
 namespace FPSGame.Object
 {
-    public class SimpleCharacter : SimpleObject3D, IBoxShaped, Collidable , IObserver
+    public class SimpleCharacter : SimpleObject3D, IBoxShaped, Collidable , IObserver, Vulnerable
     {
         public const int MAX_GUN_DELAY = 10;
         public static int total;
@@ -24,6 +24,7 @@ namespace FPSGame.Object
         public float scale;
         //private IDictionary<String, SkinnedModel> models;
         //private IDictionary<String, AnimationController> animControllers;
+        private float HPs;
         private int gunDelay;
         private IEnemyAI ai;
         private SkinnedModel currentModel;
@@ -38,6 +39,17 @@ namespace FPSGame.Object
         private float spd = 0.15f;
         private IEnemyState initState;
         private int id;
+
+        public void TakeDamage(float dmg)
+        {
+            SetHPs(HPs - dmg);
+        }
+
+        private void SetHPs(float hps)
+        {
+            this.HPs = hps;
+            if (HPs < 0) End();
+        }
 
         public override void Begin()
         {
@@ -98,6 +110,7 @@ namespace FPSGame.Object
         private void init(SkinnedModel model, Effect eff, IDictionary<String, Vector3> animFixPos, IDictionary<String, Vector3> animFixRot)
         {
             //init camera
+            HPs = 100;
             gunDelay = 0;
             Vector3 pos = GetPosition();
             pos.Y = Camera.HEIGHT;
