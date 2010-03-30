@@ -6,6 +6,7 @@ using FPSGame.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using FPSGame.Engine;
+using FPSGame.Factory;
 
 namespace FPSGame.Object
 {
@@ -63,11 +64,47 @@ namespace FPSGame.Object
             shockAdd = true;
         }
 
+        public void UpdatePicking()
+        {
+            IDisplayObject[] objects = MapLoader.GetInstance().GetMap().GetFullMap();
+            FirstPersonCamera cam = FPSGame.GetInstance().GetFPSCamera();
+            object picked = null;
+            float closestIntersection = float.MaxValue;
+            float? intersection;
+            Ray cursorRay = RayCollisionDetector.CalculateCursorRay(cam.GetProjection(), cam.GetView());
+            for (int i = 0; i < objects.Length; i++)
+            {
+                IDisplayObject obj = objects[i];
+                if (obj is Collidable)
+                {
+                    intersection = ((Collidable)obj).CollideWith(cursorRay);
+                    if (intersection.Value < closestIntersection)
+                    {
+                        closestIntersection = intersection.Value;
+                        picked = obj;
+                    }
+                }
+            }
+
+            if (picked != null)
+            {
+                if (picked is Vulnerable)
+                {
+                    ((Vulnerable)picked).TakeDamage(5);
+                }
+                FPSGame.GetInstance().SetInfo("has picked");
+                //notify enemies about the event
+                if (picked is SimpleCharacter)
+                    GameEventGenerator.GenerateEvent(default(IObject), (SimpleCharacter)picked, GameEventGenerator.EVENT_PLAYER_HIT, "", "", false, true);
+            }
+        }
+
         public void Shoot()
         {
             if (latency >= MAX_LATENCY)
             {
-                GameEventGenerator.GenerateEvent(default(IObject), default(IObject), GameEventGenerator.EVENT_PLAYER_SHOOT, "24", "", false, false);
+                UpdatePicking();
+                GameEventGenerator.GenerateEvent(default(IObject), default(IObject), GameEventGenerator.EVENT_PLAYER_SHOOT, "48", "", false, false);
                 drawFire = true;
                 if (!shooting)
                 {

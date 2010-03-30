@@ -304,7 +304,7 @@ namespace FPSGame.Factory
             ArrayList full = new ArrayList();
             for (int i = 0; i < matrix.Length; i++)
             {
-                for (int j = 0; j < matrix.Length; j++)
+                for (int j = 0; j < matrix[i].Length; j++)
                 {
                     IDisplayObject obj = matrix[i][j];
                     if (obj != null)

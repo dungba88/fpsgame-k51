@@ -103,8 +103,6 @@ namespace FPSGame.Engine.GameState
             if (ms.LeftButton == ButtonState.Pressed)
             {
                 FPSGame.GetInstance().GetPlayer().GetCharacter().Shoot();
-                //check for intersection
-                UpdatePicking();
             }
             else
             {
@@ -129,39 +127,6 @@ namespace FPSGame.Engine.GameState
         {
             FPSGame.GetInstance().ShowMouse();
             EffectUtils.GetInstance().StopSound(ResourceManager.OPERA_THEME_SONG);
-        }
-
-        public void UpdatePicking()
-        {
-            IDisplayObject[] objects = MapLoader.GetInstance().GetMap().GetFullMap();
-            FirstPersonCamera cam = FPSGame.GetInstance().GetFPSCamera();
-            SimpleCharacter picked = null;
-            float closestIntersection = float.MaxValue;
-            float? intersection;
-            Ray cursorRay = RayCollisionDetector.CalculateCursorRay(cam.GetProjection(), cam.GetView());
-            for (int i = 0; i < objects.Length; i++)
-            {
-                IDisplayObject obj = objects[i];
-                if (obj is Collidable)
-                {
-                    intersection = ((Collidable)obj).CollideWith(cursorRay);
-                    if (intersection.Value < closestIntersection)
-                    {
-                        closestIntersection = intersection.Value;
-                        if (obj is SimpleCharacter)
-                            picked = (SimpleCharacter)obj;
-                        else
-                            picked = null;
-                    }
-                }
-            }
-
-            if (picked != null)
-            {
-                FPSGame.GetInstance().SetInfo("has picked");
-                //notify enemies about the event
-                GameEventGenerator.GenerateEvent(default(IObject), picked, GameEventGenerator.EVENT_PLAYER_HIT, "", "", false, true);
-            }
         }
     }
 }

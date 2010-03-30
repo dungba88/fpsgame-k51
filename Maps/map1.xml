@@ -4,7 +4,7 @@
 	<description>Demo 2D-map for AI</description>
 	<mission-description></mission-description>
 
-	<matrix-size>23 22</matrix-size>
+	<matrix-size>16 18</matrix-size>
 	<elem-size>6</elem-size>
 
 	<top-left>0 0 0</top-left>
@@ -13,28 +13,28 @@
 		<angle-of-view>270</angle-of-view>
 	</player> 
 	<content>
-		<matrixRow>0 0 0 0 0 0 0 0 0 * * * * * * * * * * * * * 0</matrixRow> 
-		<matrixRow>0 0 0 * * * * * * * * * * * * * * * * * * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 0 0 * * * * * * * * * * * * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 0 0 * * 0 * * * * * * * * * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 * * * * * * * * * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 0 0 * 0 0 0 * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 * 0 0 * * * * * * 0 * 0 0 0 * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 * 0 0 0 0 0 * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 * 0 * 0 0 0 * * 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 0 0 * * * * * * 0</matrixRow> 
-		<matrixRow>0 0 * * * * * * * * * 0 0 0 * 0 * * * * * * 0</matrixRow> 
-  		<matrixRow>0 0 * * 0 0 0 0 0 0 * * * * * 0 * * * * 0 0 0</matrixRow> 
-  		<matrixRow>0 0 * * 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow> 
-		<matrixRow>0 0 * * 0 0 0 0 0 0 * * * * * * * * * * 0 0 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 * * * * * *</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 0 * * * * * *</matrixRow> 
-		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 * * 0 0 0 0</matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 * * * * * * * </matrixRow> 
+		<matrixRow>0 0 0 * * * * * * * * * * * * * </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 * * * * * * * </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 * * 0 * * * * </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 * * * * </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 0 0 </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * * * * * 0 </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 * 0 </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 * 0 </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 * 0 0 * * 0 0 0 0 0 </matrixRow> 
+		<matrixRow>0 0 * * * * * * * * * 0 0 0 * 0 </matrixRow> 
+  		<matrixRow>0 0 * * 0 0 0 0 0 0 * * * * * 0 </matrixRow> 
+  		<matrixRow>0 0 * * 0 0 0 0 0 0 0 0 0 0 0 0 </matrixRow> 
+		<matrixRow>0 0 * * 0 0 0 0 0 0 * * * * * * </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 </matrixRow> 
+		<matrixRow>0 0 0 0 0 0 0 0 0 0 * 0 0 0 0 0 </matrixRow> 
+<!--		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 * * 0 0 0 0</matrixRow> 
 		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 * * 0 0 0 0</matrixRow> 
 		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 * * 0 0 0 0</matrixRow>
-		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow>
+		<matrixRow>0 0 0 0 0 0 0 * * * * 0 0 0 0 0 0 0 0 0 0 0 0</matrixRow>-->
 	</content>
 	<enemies>
 		<enemy>
@@ -50,11 +50,11 @@
 			<initial-rotation>270</initial-rotation>
 		</enemy>
 		<enemy>
-			<position>6 21</position>
+			<position>6 17</position>
 			<name>private</name>
 			<file-name>PlayerMarine</file-name>
 			<initial-state>patrol</initial-state>
-			<patrol-to>0 21</patrol-to>
+			<patrol-to>0 17</patrol-to>
 			<initial-rotation>180</initial-rotation>
 		</enemy>
 		<enemy>
@@ -65,7 +65,7 @@
 			<patrol-to>4 17</patrol-to>
 			<initial-rotation>90</initial-rotation>
 		</enemy>
-		<enemy>
+<!--		<enemy>
 			<position>11 3</position>
 			<name>private</name>
 			<file-name>PlayerMarine</file-name>
@@ -87,7 +87,7 @@
 			<initial-state>patrol</initial-state>
 			<patrol-to>16 21</patrol-to>
 			<initial-rotation>90</initial-rotation>
-		</enemy>
+		</enemy>-->
 	</enemies>
 	<models>
 		<model>
@@ -110,12 +110,3 @@
 		</model>
 	</models>
 </map-2d>
-
-<!--
-*: nothing
-0: normal brick
-1: brick with wall
-2: brick with wall and door
-4: table (square)
-5: player
--->
